@@ -1,9 +1,11 @@
 package com.ThankSens.Hentori.Controllers;
 
 import com.ThankSens.Hentori.Payload.Request.OrderRequest;
+import com.ThankSens.Hentori.Payload.Response.ResponseData;
 import com.ThankSens.Hentori.Service.Interface.OrderServiceImp;
 import com.ThankSens.Hentori.Service.OrderService;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +20,23 @@ public class OrderController {
         this.modelMapper = modelMapper;
     }
 
-    @PostMapping
+    @GetMapping("/hello")
+    public String hello(){
+        return "hello";
+    }
+
+    @PostMapping("/create")
     public ResponseEntity<?> createOrder(@RequestBody OrderRequest orderRequest){
         boolean check = orderServiceImp.createOrder(orderRequest);
-        return null;
+        ResponseData responseData = new ResponseData();
+        if (check){
+            responseData.setCheck(true);
+            responseData.setMessenger("created");
+        }else {
+            responseData.setCheck(false);
+            responseData.setMessenger("can not create");
+        }
+        return new ResponseEntity<>(responseData, HttpStatus.CREATED);
     }
 
 }
