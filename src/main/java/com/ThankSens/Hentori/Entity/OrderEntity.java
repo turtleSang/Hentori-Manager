@@ -12,13 +12,13 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date date;
+    @Column(name = "create_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date createAt;
 
     @Column
-    private Long total;
+    private int total;
 
-    @Column
+    @Column(columnDefinition = "TIMESTAMP")
     private Date appointmentDay;
 
     @ManyToOne
@@ -46,19 +46,12 @@ public class OrderEntity {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
-    }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Long getTotal() {
+    public int getTotal() {
         return total;
     }
 
-    public void setTotal(Long total) {
+    public void setTotal(int total) {
         this.total = total;
     }
 
@@ -108,5 +101,13 @@ public class OrderEntity {
 
     public void setOrderStatusEntity(OrderStatusEntity orderStatusEntity) {
         this.orderStatusEntity = orderStatusEntity;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
     }
 }

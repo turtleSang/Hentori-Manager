@@ -14,6 +14,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,8 +50,14 @@ public class OrderService implements OrderServiceImp {
             List<OrderAccessoryRequest> orderAccessoryRequestList = orderRequest.getOrderAccessoryRequestList();
             Optional<ClientEntity> clientEntity = clientRepository.findById(orderRequest.getClient_id());
             Optional<OrderStatusEntity> orderStatusEntity = orderStatusRepository.findById(orderRequest.getOrderStatusRequest().getId());
+
             if (clientEntity.isPresent() && orderStatusEntity.isPresent()){
-                OrderEntity orderEntity = modelMapper.map(orderRequest, OrderEntity.class);
+                OrderEntity orderEntity = new OrderEntity();
+                Date date = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date appointmentDay = dateFormat.parse(orderRequest.getAppointmentDay());
+                orderEntity.setCreateAt(date);
+                orderEntity.setAppointmentDay(appointmentDay);
                 orderEntity.setClientEntity(clientEntity.get());
                 orderEntity.setOrderStatusEntity(orderStatusEntity.get());
                 orderRepository.save(orderEntity);
@@ -57,6 +66,7 @@ public class OrderService implements OrderServiceImp {
                 return false;
             }
         }catch (Exception e){
+            System.out.println(e);
             return false;
         }
     }

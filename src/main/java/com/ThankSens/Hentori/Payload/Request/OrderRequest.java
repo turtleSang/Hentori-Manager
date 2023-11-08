@@ -15,7 +15,7 @@ public class OrderRequest {
     private List<OrderSuitRequest> clientSuitRequestList;
     private List<OrderTrousersRequest> clientTrousersRequestsList;
     private List<OrderAccessoryRequest> orderAccessoryRequestList;
-    private Date appointmentDay;
+    private String appointmentDay;
     private UUID client_id;
     private OrderStatusRequest orderStatusRequest;
 
@@ -43,11 +43,11 @@ public class OrderRequest {
         this.orderAccessoryRequestList = orderAccessoryRequestList;
     }
 
-    public Date getAppointmentDay() {
+    public String getAppointmentDay() {
         return appointmentDay;
     }
 
-    public void setAppointmentDay(Date appointmentDay) {
+    public void setAppointmentDay(String appointmentDay) {
         this.appointmentDay = appointmentDay;
     }
 
