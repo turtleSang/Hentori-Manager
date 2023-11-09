@@ -2,8 +2,8 @@ package com.ThankSens.Hentori.Payload.Request.Order;
 
 public class OrderAccessoryRequest {
     private String nameAccessory;
-    private String price;
-    private String amount;
+    private int price;
+    private int amount;
     private String note;
 
     public String getNameAccessory() {
@@ -14,19 +14,19 @@ public class OrderAccessoryRequest {
         this.nameAccessory = nameAccessory;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public String getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 

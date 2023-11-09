@@ -11,8 +11,8 @@ public class OrderTrousersRequest {
     private String kieuTuiSau;
     private String soTui;
     private String kieuLai;
-    private String price;
-    private String amount;
+    private int price;
+    private int amount;
     private String note;
 
     public String getFormQuan() {
@@ -71,19 +71,19 @@ public class OrderTrousersRequest {
         this.kieuLai = kieuLai;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public String getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 

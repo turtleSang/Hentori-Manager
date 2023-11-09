@@ -7,8 +7,9 @@ public class OrderSuitRequest {
     private String lotAo;
     private String kieuNut;
     private String kieuTui;
-    private long price;
+    private int price;
     private int amount;
+    private String note;
 
     public String getKieuAo() {
         return kieuAo;
@@ -58,11 +59,11 @@ public class OrderSuitRequest {
         this.kieuTui = kieuTui;
     }
 
-    public long getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -72,5 +73,13 @@ public class OrderSuitRequest {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

@@ -31,13 +31,16 @@ public class OrderTrousersEntity {
     private String kieuLai;
 
     @Column
-    private String price;
+    private int price;
 
     @Column
-    private String amount;
+    private int amount;
 
     @Column(length = 1000)
     private String note;
+
+    @Column
+    private int total;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -107,19 +110,19 @@ public class OrderTrousersEntity {
         this.kieuLai = kieuLai;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public String getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
@@ -129,6 +132,14 @@ public class OrderTrousersEntity {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     public OrderEntity getOrderEntity() {

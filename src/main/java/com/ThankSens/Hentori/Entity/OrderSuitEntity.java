@@ -28,10 +28,13 @@ public class OrderSuitEntity {
     private String kieuTui;
 
     @Column
-    private long price;
+    private int price;
 
     @Column
     private int amount;
+
+    @Column
+    private int total;
 
     @Column(length = 1000)
     private String note;
@@ -96,11 +99,11 @@ public class OrderSuitEntity {
         this.kieuTui = kieuTui;
     }
 
-    public long getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -110,6 +113,14 @@ public class OrderSuitEntity {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     public String getNote() {
