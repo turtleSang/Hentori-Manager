@@ -1,5 +1,6 @@
 package com.ThankSens.Hentori.Service;
 
+import com.ThankSens.Hentori.Dto.*;
 import com.ThankSens.Hentori.Entity.*;
 import com.ThankSens.Hentori.Payload.Request.Order.OrderAccessoryRequest;
 import com.ThankSens.Hentori.Payload.Request.Order.OrderStatusRequest;
@@ -105,6 +106,24 @@ public class OrderService implements OrderServiceImp {
         }
     }
 
+    @Override
+    public List<OrderDto> getAllOrder() {
+        List<OrderEntity> orderEntityList = orderRepository.findAll();
+        if (!(orderEntityList.size() > 0)) {
+
+            return null;
+        }
+        List<OrderDto> orderDtoList = new ArrayList<>();
+        for (OrderEntity orderEntity : orderEntityList
+        ) {
+            OrderDto orderDto = createOrderDtoFromOrderEntity(orderEntity);
+            orderDtoList.add(orderDto);
+        }
+
+
+        return orderDtoList;
+    }
+
     // Calculate money suit
     private int calculateSuitOrder(List<OrderSuitRequest> orderSuitRequestList) {
         int total = 0;
@@ -135,13 +154,13 @@ public class OrderService implements OrderServiceImp {
     }
 
 
-    //    Function save list suit
+    //    Save list suit
     private void addListSuit(List<OrderSuitRequest> orderSuitRequestList, OrderEntity orderEntity) throws Exception {
         try {
             List<OrderSuitEntity> orderSuitEntityList = new ArrayList<>();
             for (OrderSuitRequest orderSuitRequest : orderSuitRequestList) {
                 OrderSuitEntity orderSuitEntity = modelMapper.map(orderSuitRequest, OrderSuitEntity.class);
-                orderSuitEntity.setTotal(orderSuitRequest.getPrice()*orderSuitRequest.getAmount());
+                orderSuitEntity.setTotal(orderSuitRequest.getPrice() * orderSuitRequest.getAmount());
                 orderSuitEntity.setOrderEntity(orderEntity);
                 orderSuitEntityList.add(orderSuitEntity);
             }
@@ -151,6 +170,7 @@ public class OrderService implements OrderServiceImp {
         }
     }
 
+    // Save list trousers
     private void addListTrousers(List<OrderTrousersRequest> orderTrousersRequestList, OrderEntity orderEntity) throws Exception {
 
         try {
@@ -158,7 +178,7 @@ public class OrderService implements OrderServiceImp {
             for (OrderTrousersRequest orderTrousersRequest : orderTrousersRequestList) {
                 OrderTrousersEntity orderTrousersEntity = modelMapper.map(orderTrousersRequest, OrderTrousersEntity.class);
                 orderTrousersEntity.setOrderEntity(orderEntity);
-                orderTrousersEntity.setTotal(orderTrousersRequest.getPrice()*orderTrousersRequest.getAmount());
+                orderTrousersEntity.setTotal(orderTrousersRequest.getPrice() * orderTrousersRequest.getAmount());
                 orderTrousersEntityList.add(orderTrousersEntity);
             }
             orderTrousersRepository.saveAll(orderTrousersEntityList);
@@ -168,6 +188,7 @@ public class OrderService implements OrderServiceImp {
         }
     }
 
+    // Save list Accessory
     private void addListAccessory(List<OrderAccessoryRequest> orderAccessoryRequestList, OrderEntity orderEntity) throws Exception {
 
         try {
@@ -175,7 +196,7 @@ public class OrderService implements OrderServiceImp {
             for (OrderAccessoryRequest orderAccessoryRequest : orderAccessoryRequestList) {
                 OrderAccessoryEntity orderAccessoryEntity = modelMapper.map(orderAccessoryRequest, OrderAccessoryEntity.class);
                 orderAccessoryEntity.setOrderEntity(orderEntity);
-                orderAccessoryEntity.setTotal(orderAccessoryRequest.getAmount()*orderAccessoryRequest.getPrice());
+                orderAccessoryEntity.setTotal(orderAccessoryRequest.getAmount() * orderAccessoryRequest.getPrice());
             }
             orderAccessoryRepository.saveAll(orderAccessoryEntityList);
         } catch (Exception e) {
@@ -183,4 +204,35 @@ public class OrderService implements OrderServiceImp {
         }
     }
 
+    // transfer OrderEntity to OrderDto
+    private OrderDto createOrderDtoFromOrderEntity(OrderEntity orderEntity){
+        OrderDto orderDto = modelMapper.map(orderEntity, OrderDto.class);
+        OrderStatusDto orderStatusDto = modelMapper.map(orderEntity.getOrderStatusEntity(), OrderStatusDto.class);
+        OrderClientDto orderClientDto = modelMapper.map(orderEntity.getClientEntity(), OrderClientDto.class);
+        List<OrderSuitDto> orderSuitDtoList = createOrderSuitDtoList(orderEntity.getOrderSuitEntityList());
+        List<OrderTrousersDto> orderTrousersDtoList = null;
+        List<OrderAccessoryDto> orderAccessoryDtoList = null;
+        orderDto.setOrderStatusDto(orderStatusDto);
+        orderDto.setOrderClientDto(orderClientDto);
+        orderDto.setOrderSuitDtoList(orderSuitDtoList);
+        orderDto.setOrderTrousersDtoList(orderTrousersDtoList);
+        orderDto.setOrderAccessoryDtoList(orderAccessoryDtoList);
+        return orderDto;
+    }
+
+    private List<OrderSuitDto> createOrderSuitDtoList(List<OrderSuitEntity> orderSuitEntityList){
+        if (orderSuitEntityList.size() > 0){
+            ArrayList<OrderSuitDto> orderSuitDtoArrayList = new ArrayList<>();
+
+            for (OrderSuitEntity orderSuitEntity: orderSuitEntityList
+            ) {
+                OrderSuitDto orderSuitDto = modelMapper.map(orderSuitEntity, OrderSuitDto.class);
+                orderSuitDtoArrayList.add(orderSuitDto);
+            }
+
+            return orderSuitDtoArrayList;
+        }else {
+            return null;
+        }
+    }
 }
