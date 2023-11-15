@@ -9,4 +9,5 @@ import java.util.List;
 public interface OrderServiceImp {
     boolean createOrder(OrderRequest orderRequest);
     List<OrderDto> getAllOrder();
+    OrderDto getDetailOrder(int id);
 }

@@ -39,7 +39,7 @@ public class OrderController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAllOrder(){
+    public ResponseEntity<?> getAllOrders(){
         List<OrderDto> orderDtoList = orderServiceImp.getAllOrder();
         ResponseData responseData = new ResponseData();
         if (orderDtoList == null){
@@ -52,4 +52,25 @@ public class OrderController {
         responseData.setObject(orderDtoList);
         return new ResponseEntity<>(responseData, HttpStatus.FOUND);
     }
+
+    @GetMapping("/detail/{order_id}")
+    public ResponseEntity<?> getDetailOrder(@PathVariable int order_id){
+        OrderDto orderDto = orderServiceImp.getDetailOrder(order_id);
+        ResponseData responseData = new ResponseData();
+        HttpStatus httpStatus;
+        if (orderDto != null){
+            responseData.setMessenger("OK");
+            responseData.setCheck(true);
+            responseData.setObject(orderDto);
+            httpStatus = HttpStatus.FOUND;
+        }
+        else {
+            responseData.setMessenger("Not Found");
+            responseData.setCheck(true);
+            httpStatus = HttpStatus.NOT_FOUND;
+        }
+        ResponseEntity responseEntity = new ResponseEntity<ResponseData>(responseData, httpStatus);
+        return responseEntity;
+    }
+
 }

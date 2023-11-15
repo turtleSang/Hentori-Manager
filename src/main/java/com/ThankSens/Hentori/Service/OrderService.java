@@ -66,16 +66,7 @@ public class OrderService implements OrderServiceImp {
                 Date date = new Date();
                 Date appointmentDay = convertToDate.convertDate(orderRequest.getAppointmentDay());
                 //Calculate money order
-                int totalOrder = 0;
-                if (orderSuitRequestList != null) {
-                    totalOrder += calculateSuitOrder(orderSuitRequestList);
-                }
-                if (orderTrousersRequestList != null) {
-                    totalOrder += calculateTrouserOrder(orderTrousersRequestList);
-                }
-                if (orderAccessoryRequestList != null) {
-                    totalOrder += calculateAccessoryOrder(orderAccessoryRequestList);
-                }
+                int totalOrder = calculateTotal(orderSuitRequestList,orderTrousersRequestList,orderAccessoryRequestList);
                 // save Order
                 orderEntity.setCreateAt(date);
                 orderEntity.setAppointmentDay(appointmentDay);
@@ -83,19 +74,16 @@ public class OrderService implements OrderServiceImp {
                 orderEntity.setOrderStatusEntity(orderStatusEntity.get());
                 orderEntity.setTotal(totalOrder);
                 orderEntity = orderRepository.save(orderEntity);
-
+                //Add item
                 if (orderSuitRequestList != null) {
                     addListSuit(orderSuitRequestList, orderEntity);
                 }
-
                 if (orderTrousersRequestList != null) {
                     addListTrousers(orderTrousersRequestList, orderEntity);
                 }
-
                 if (orderAccessoryRequestList != null) {
                     addListAccessory(orderAccessoryRequestList, orderEntity);
                 }
-
                 return true;
             } else {
                 return false;
@@ -121,6 +109,35 @@ public class OrderService implements OrderServiceImp {
 
 
         return orderDtoList;
+    }
+
+    @Override
+    public OrderDto getDetailOrder(int id) {
+        Optional<OrderEntity> orderEntity = orderRepository.findById(id);
+
+        if (orderEntity.isPresent()){
+            OrderDto orderDto = createOrderDtoFromOrderEntity(orderEntity.get());
+            return orderDto;
+        }
+
+        return null;
+    }
+
+    // Calculate total money
+    private int calculateTotal(List<OrderSuitRequest> orderSuitRequestList,
+                               List<OrderTrousersRequest> orderTrousersRequestList,
+                               List<OrderAccessoryRequest> orderAccessoryRequestList){
+        int total = 0;
+        if (orderSuitRequestList != null) {
+            total += calculateSuitOrder(orderSuitRequestList);
+        }
+        if (orderTrousersRequestList != null) {
+            total += calculateTrouserOrder(orderTrousersRequestList);
+        }
+        if (orderAccessoryRequestList != null) {
+            total += calculateAccessoryOrder(orderAccessoryRequestList);
+        }
+        return total;
     }
 
     // Calculate money suit
