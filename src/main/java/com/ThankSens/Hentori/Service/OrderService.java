@@ -7,6 +7,7 @@ import com.ThankSens.Hentori.Payload.Request.Order.OrderStatusRequest;
 import com.ThankSens.Hentori.Payload.Request.Order.OrderSuitRequest;
 import com.ThankSens.Hentori.Payload.Request.Order.OrderTrousersRequest;
 import com.ThankSens.Hentori.Payload.Request.OrderRequest;
+import com.ThankSens.Hentori.Payload.Request.OrderUpdateRequest;
 import com.ThankSens.Hentori.Repository.*;
 import com.ThankSens.Hentori.Service.Interface.OrderServiceImp;
 import jakarta.transaction.Transactional;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +60,7 @@ public class OrderService implements OrderServiceImp {
             List<OrderAccessoryRequest> orderAccessoryRequestList = orderRequest.getOrderAccessoryRequestList();
             Optional<ClientEntity> clientEntity = clientRepository.findById(orderRequest.getClient_id());
             Optional<OrderStatusEntity> orderStatusEntity = orderStatusRepository.findById(orderRequest.getOrderStatusRequest().getId());
-
+            //Check request
             if (clientEntity.isPresent() && orderStatusEntity.isPresent()
                     && (orderSuitRequestList != null || orderTrousersRequestList != null || orderAccessoryRequestList != null)) {
                 //Create new OrderEntity
@@ -106,8 +108,6 @@ public class OrderService implements OrderServiceImp {
             OrderDto orderDto = createOrderDtoFromOrderEntity(orderEntity);
             orderDtoList.add(orderDto);
         }
-
-
         return orderDtoList;
     }
 
@@ -121,6 +121,56 @@ public class OrderService implements OrderServiceImp {
         }
 
         return null;
+    }
+
+    @Transactional
+    @Override
+    public boolean updateOrder(int order_id, OrderUpdateRequest orderUpdateRequest) {
+        try{
+            Optional<OrderEntity> orderEntity = orderRepository.findById(order_id);
+            Optional<ClientEntity> clientEntity = clientRepository.findById(orderUpdateRequest.getClient_id());
+            Optional<OrderStatusEntity> orderStatusEntity = orderStatusRepository.findById(orderUpdateRequest.getOrderStatusRequest().getId());
+            if (orderEntity.isPresent() && clientEntity.isPresent() && orderStatusEntity.isPresent()){
+                orderEntity.get().setOrderStatusEntity(orderStatusEntity.get());
+                orderEntity.get().setClientEntity(clientEntity.get());
+                orderEntity.get().setAppointmentDay(convertToDate.convertDate(orderUpdateRequest.getAppointmentDay()));
+                orderRepository.save(orderEntity.get());
+                return true;
+            }
+            return false;
+        }catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateOrderSuit(int order_suit_id, OrderSuitRequest orderSuitRequest) {
+        Optional<OrderSuitEntity> orderSuitEntityOptional = orderSuitRepository.findById(order_suit_id);
+        if (orderSuitEntityOptional.isPresent()){
+            OrderSuitEntity orderSuitEntity = modelMapper.map(orderSuitRequest, OrderSuitEntity.class);
+            //reset different Attribute
+            orderSuitEntity.setOrderEntity(orderSuitEntityOptional.get().getOrderEntity());
+            orderSuitEntity.setTotal(orderSuitRequest.getPrice()*orderSuitRequest.getAmount());
+            orderSuitEntity.setId(order_suit_id);
+            orderSuitRepository.save(orderSuitEntity);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean updateOrderTrousers(int order_trousers_id, OrderTrousersRequest orderTrousersRequest) {
+        Optional<OrderTrousersEntity> orderTrousersEntityOptional = orderTrousersRepository.findById(order_trousers_id);
+        if (orderTrousersEntityOptional.isPresent()){
+            OrderTrousersEntity orderTrousersEntity = modelMapper.map(orderTrousersRequest, OrderTrousersEntity.class);
+            //reset different Attribute
+            orderTrousersEntity.setOrderEntity(orderTrousersEntityOptional.get().getOrderEntity());
+            orderTrousersEntity.setTotal(orderTrousersRequest.getPrice()*orderTrousersRequest.getAmount());
+            orderTrousersEntity.setId(order_trousers_id);
+            orderTrousersRepository.save(orderTrousersEntity);
+            return true;
+        }
+        return false;
     }
 
     // Calculate total money
