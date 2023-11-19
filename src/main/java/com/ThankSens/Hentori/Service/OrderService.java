@@ -173,6 +173,21 @@ public class OrderService implements OrderServiceImp {
         return false;
     }
 
+    @Override
+    public List<OrderDto> getProcessingOrder() {
+        List<OrderEntity> orderEntityProcessingList = orderRepository.findProcessingOrder();
+        if (!(orderEntityProcessingList.size()>0)){
+            return null;
+        }
+       List<OrderDto> orderProcessingDtoList = new ArrayList<>();
+        for (OrderEntity orderEntity: orderEntityProcessingList
+             ) {
+            OrderDto orderDto = createOrderDtoFromOrderEntity(orderEntity);
+            orderProcessingDtoList.add(orderDto);
+        }
+        return orderProcessingDtoList;
+    }
+
     // Calculate total money
     private int calculateTotal(List<OrderSuitRequest> orderSuitRequestList,
                                List<OrderTrousersRequest> orderTrousersRequestList,

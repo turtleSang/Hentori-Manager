@@ -75,6 +75,21 @@ public class OrderController {
         return responseEntity;
     }
 
+    @GetMapping("/processing")
+    public ResponseEntity<?> getProcessingOrder(){
+        List<OrderDto> orderDtoList = orderServiceImp.getProcessingOrder();
+        ResponseData responseData = new ResponseData();
+        if (orderDtoList == null) {
+            responseData.setCheck(true);
+            responseData.setMessenger("Not Found");
+            return new ResponseEntity<>(responseData, HttpStatus.NOT_FOUND);
+        }
+        responseData.setCheck(true);
+        responseData.setMessenger("Ok");
+        responseData.setObject(orderDtoList);
+        return new ResponseEntity<>(responseData, HttpStatus.FOUND);
+    }
+
     @PutMapping("/update/{order_id}")
     public ResponseEntity<?> updateOrder(@PathVariable int order_id, @RequestBody OrderUpdateRequest orderUpdateRequest) {
         boolean check = false;
