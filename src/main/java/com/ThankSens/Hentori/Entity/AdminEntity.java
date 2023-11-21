@@ -5,12 +5,13 @@ import jakarta.persistence.*;
 import java.util.UUID;
 
 @Entity
+@Table(name = "admin")
 public class AdminEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     @Column(name = "password")

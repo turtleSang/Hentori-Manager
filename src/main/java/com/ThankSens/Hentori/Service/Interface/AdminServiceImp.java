@@ -4,4 +4,5 @@ import com.ThankSens.Hentori.Payload.Request.AdminRequest;
 
 public interface AdminServiceImp {
     boolean createAdmin(AdminRequest adminRequest);
+    String signIn(AdminRequest adminRequest);
 }
