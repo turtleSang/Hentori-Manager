@@ -1,15 +1,15 @@
 package com.ThankSens.Hentori.Security.Units;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
+
 
 @Component
 public class JjwtHelper {
@@ -22,4 +22,18 @@ public class JjwtHelper {
         return jwt;
     }
 
+    public String authenticateJwt(String jwtString){
+        byte[] bytes = Decoders.BASE64URL.decode(txtPrivate);
+        SecretKey key = Keys.hmacShaKeyFor(bytes);
+        try {
+            Jws<Claims> claimsJws = Jwts.parser().verifyWith(key).build().parseSignedClaims(jwtString);
+            String jsonAdmin = claimsJws.getPayload().getSubject();
+            return jsonAdmin;
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+
+
+    }
 }

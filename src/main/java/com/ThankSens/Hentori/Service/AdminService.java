@@ -15,10 +15,10 @@ public class AdminService implements AdminServiceImp {
     private PasswordEncoder passwordEncoder;
     private AdminRepository adminRepository;
     private JjwtHelper jjwtHelper;
-    Gson gson = new Gson();
+    private Gson gson = new Gson();
 
     @Autowired
-    public AdminService(PasswordEncoder passwordEncoder, AdminRepository adminRepository, JjwtHelper jjwtHelper) {
+    public AdminService(PasswordEncoder passwordEncoder, AdminRepository adminRepository, JjwtHelper jjwtHelper, Gson gson) {
         this.passwordEncoder = passwordEncoder;
         this.adminRepository = adminRepository;
         this.jjwtHelper = jjwtHelper;
