@@ -90,6 +90,21 @@ public class OrderController {
         return new ResponseEntity<>(responseData, HttpStatus.FOUND);
     }
 
+    @GetMapping("/date")
+    public ResponseEntity<?> getOrderByDate(@RequestParam String startDate, @RequestParam String endDate){
+        List<OrderDto> orderDtoList = orderServiceImp.getOrderByDate(startDate,endDate);
+        ResponseData responseData = new ResponseData();
+        if (orderDtoList == null) {
+            responseData.setCheck(true);
+            responseData.setMessenger("Not Found");
+            return new ResponseEntity<>(responseData, HttpStatus.NOT_FOUND);
+        }
+        responseData.setCheck(true);
+        responseData.setMessenger("Ok");
+        responseData.setObject(orderDtoList);
+        return new ResponseEntity<>(responseData, HttpStatus.FOUND);
+    }
+
     @PutMapping("/update/{order_id}")
     public ResponseEntity<?> updateOrder(@PathVariable int order_id, @RequestBody OrderUpdateRequest orderUpdateRequest) {
         boolean check = false;

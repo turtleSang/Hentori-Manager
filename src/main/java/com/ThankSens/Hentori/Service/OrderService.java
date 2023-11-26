@@ -188,6 +188,25 @@ public class OrderService implements OrderServiceImp {
         return orderProcessingDtoList;
     }
 
+    @Override
+    public List<OrderDto> getOrderByDate(String start, String end) {
+        try{
+            Date startDate = convertToDate.convertDate(start);
+            Date endDate = convertToDate.convertDate(end);
+            List<OrderEntity> orderEntityList = orderRepository.findOrderByDate(startDate, endDate);
+            List<OrderDto> orderDtoList = new ArrayList<>();
+            for (OrderEntity orderEntity: orderEntityList
+                 ) {
+                OrderDto orderDto = createOrderDtoFromOrderEntity(orderEntity);
+                orderDtoList.add(orderDto);
+            }
+            return orderDtoList;
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+
     // Calculate total money
     private int calculateTotal(List<OrderSuitRequest> orderSuitRequestList,
                                List<OrderTrousersRequest> orderTrousersRequestList,

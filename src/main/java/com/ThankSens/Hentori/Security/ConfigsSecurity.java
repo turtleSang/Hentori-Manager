@@ -21,8 +21,6 @@ public class ConfigsSecurity  {
         this.customJwtFilter = customJwtFilter;
     }
 
-    @Autowired
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
