@@ -170,6 +170,7 @@ public class OrderService implements OrderServiceImp {
         return false;
     }
 
+    @Override
     public boolean updateOrderTrousers(int order_trousers_id, OrderTrousersRequest orderTrousersRequest) {
         Optional<OrderTrousersEntity> orderTrousersEntityOptional = orderTrousersRepository.findById(order_trousers_id);
         if (orderTrousersEntityOptional.isPresent()) {
