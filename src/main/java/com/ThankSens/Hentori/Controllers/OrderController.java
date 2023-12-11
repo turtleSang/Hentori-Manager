@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.http.HttpResponse;
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/order")
 public class OrderController {
@@ -29,16 +30,19 @@ public class OrderController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createOrder(@RequestBody OrderRequest orderRequest) {
-        boolean check = orderServiceImp.createOrder(orderRequest);
+        int check = orderServiceImp.createOrder(orderRequest);
         ResponseData responseData = new ResponseData();
-        if (check) {
+        if (check != 0) {
             responseData.setCheck(true);
             responseData.setMessenger("created");
+            responseData.setObject(check);
+            return new ResponseEntity<>(responseData, HttpStatus.CREATED);
         } else {
             responseData.setCheck(false);
             responseData.setMessenger("can not create");
+            return new ResponseEntity<>(responseData, HttpStatus.NOT_ACCEPTABLE);
         }
-        return new ResponseEntity<>(responseData, HttpStatus.CREATED);
+
     }
 
     @GetMapping("/all")
@@ -65,7 +69,7 @@ public class OrderController {
             responseData.setMessenger("OK");
             responseData.setCheck(true);
             responseData.setObject(orderDto);
-            httpStatus = HttpStatus.FOUND;
+            httpStatus = HttpStatus.OK;
         } else {
             responseData.setMessenger("Not Found");
             responseData.setCheck(true);

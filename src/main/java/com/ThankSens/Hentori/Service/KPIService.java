@@ -26,8 +26,8 @@ public class KPIService implements KPIServiceImp {
             kpiEntity.setId(id);
             kpiEntity.setTarget(target);
             kpiEntity.setComplete(0);
-
-            return kpiRepository.save(kpiEntity);
+            KPIEntity newKpiEntity1 = kpiRepository.save(kpiEntity);
+            return newKpiEntity1;
         }catch (Exception e){
             System.out.println(e);
             return null;

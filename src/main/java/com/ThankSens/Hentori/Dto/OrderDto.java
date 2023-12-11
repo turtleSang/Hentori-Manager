@@ -7,12 +7,21 @@ public class OrderDto {
     private int id;
     private Date createAt;
     private int total;
+    private int payment;
     private Date appointmentDay;
     private OrderStatusDto orderStatusDto;
     private OrderClientDto orderClientDto;
     private List<OrderSuitDto> orderSuitDtoList;
     private List<OrderTrousersDto> orderTrousersDtoList;
     private List<OrderAccessoryDto> orderAccessoryDtoList;
+
+    public int getPayment() {
+        return payment;
+    }
+
+    public void setPayment(int payment) {
+        this.payment = payment;
+    }
 
     public int getId() {
         return id;

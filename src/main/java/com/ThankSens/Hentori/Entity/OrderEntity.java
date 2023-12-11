@@ -18,6 +18,9 @@ public class OrderEntity {
     @Column
     private int total;
 
+    @Column
+    private int payment;
+
     @Column(columnDefinition = "TIMESTAMP")
     private Date appointmentDay;
 
@@ -77,6 +80,14 @@ public class OrderEntity {
 
     public void setOrderTrousersEntityList(List<OrderTrousersEntity> orderTrousersEntityList) {
         this.orderTrousersEntityList = orderTrousersEntityList;
+    }
+
+    public int getPayment() {
+        return payment;
+    }
+
+    public void setPayment(int payment) {
+        this.payment = payment;
     }
 
     public List<OrderAccessoryEntity> getOrderAccessoryEntityList() {

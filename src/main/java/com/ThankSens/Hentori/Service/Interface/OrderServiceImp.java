@@ -11,7 +11,7 @@ import java.text.ParseException;
 import java.util.List;
 
 public interface OrderServiceImp {
-    boolean createOrder(OrderRequest orderRequest);
+    int createOrder(OrderRequest orderRequest);
     List<OrderDto> getAllOrder();
     OrderDto getDetailOrder(int id);
     boolean updateOrder(int order_id, OrderUpdateRequest orderUpdateRequest) throws ParseException;

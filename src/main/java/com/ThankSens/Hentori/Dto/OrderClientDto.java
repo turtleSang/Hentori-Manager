@@ -5,6 +5,7 @@ import java.util.UUID;
 public class OrderClientDto {
     private UUID id;
     private String username;
+    private String phoneNumber;
 
     public UUID getId() {
         return id;
@@ -20,5 +21,13 @@ public class OrderClientDto {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

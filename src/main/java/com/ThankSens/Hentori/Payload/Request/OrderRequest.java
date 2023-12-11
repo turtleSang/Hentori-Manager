@@ -1,38 +1,44 @@
 package com.ThankSens.Hentori.Payload.Request;
 
-import com.ThankSens.Hentori.Payload.Request.Client.ClientSuitRequest;
-import com.ThankSens.Hentori.Payload.Request.Client.ClientTrousersRequest;
 import com.ThankSens.Hentori.Payload.Request.Order.OrderAccessoryRequest;
 import com.ThankSens.Hentori.Payload.Request.Order.OrderStatusRequest;
 import com.ThankSens.Hentori.Payload.Request.Order.OrderSuitRequest;
 import com.ThankSens.Hentori.Payload.Request.Order.OrderTrousersRequest;
 
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 public class OrderRequest {
-    private List<OrderSuitRequest> clientSuitRequestList;
-    private List<OrderTrousersRequest> clientTrousersRequestsList;
+    private List<OrderSuitRequest> orderSuitRequestList;
+    private List<OrderTrousersRequest> orderTrousersRequestList;
     private List<OrderAccessoryRequest> orderAccessoryRequestList;
     private String appointmentDay;
     private UUID client_id;
+    private int payment;
     private OrderStatusRequest orderStatusRequest;
 
-    public List<OrderSuitRequest> getClientSuitRequestList() {
-        return clientSuitRequestList;
+    public List<OrderSuitRequest> getOrderSuitRequestList() {
+        return orderSuitRequestList;
     }
 
-    public void setClientSuitRequestList(List<OrderSuitRequest> clientSuitRequestList) {
-        this.clientSuitRequestList = clientSuitRequestList;
+    public void setOrderSuitRequestList(List<OrderSuitRequest> orderSuitRequestList) {
+        this.orderSuitRequestList = orderSuitRequestList;
     }
 
-    public List<OrderTrousersRequest> getClientTrousersRequestsList() {
-        return clientTrousersRequestsList;
+    public int getPayment() {
+        return payment;
     }
 
-    public void setClientTrousersRequestsList(List<OrderTrousersRequest> clientTrousersRequestsList) {
-        this.clientTrousersRequestsList = clientTrousersRequestsList;
+    public void setPayment(int payment) {
+        this.payment = payment;
+    }
+
+    public List<OrderTrousersRequest> getOrderTrousersRequestList() {
+        return orderTrousersRequestList;
+    }
+
+    public void setOrderTrousersRequestList(List<OrderTrousersRequest> orderTrousersRequestList) {
+        this.orderTrousersRequestList = orderTrousersRequestList;
     }
 
     public List<OrderAccessoryRequest> getOrderAccessoryRequestList() {

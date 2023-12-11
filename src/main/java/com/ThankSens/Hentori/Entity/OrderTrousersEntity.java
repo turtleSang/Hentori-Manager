@@ -15,8 +15,6 @@ public class OrderTrousersEntity {
     @Column
     private String kieuLung;
 
-    @Column
-    private String lotAo;
 
     @Column
     private String kieuTuiTruoc;
@@ -68,14 +66,6 @@ public class OrderTrousersEntity {
 
     public void setKieuLung(String kieuLung) {
         this.kieuLung = kieuLung;
-    }
-
-    public String getLotAo() {
-        return lotAo;
-    }
-
-    public void setLotAo(String lotAo) {
-        this.lotAo = lotAo;
     }
 
     public String getKieuTuiTruoc() {

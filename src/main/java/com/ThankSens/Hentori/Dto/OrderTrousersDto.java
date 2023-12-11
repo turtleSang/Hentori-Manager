@@ -4,7 +4,6 @@ public class OrderTrousersDto {
     private int id;
     private String formQuan;
     private String kieuLung;
-    private String lotAo;
     private String kieuTuiTruoc;
     private String kieuTuiSau;
     private String soTui;
@@ -36,14 +35,6 @@ public class OrderTrousersDto {
 
     public void setKieuLung(String kieuLung) {
         this.kieuLung = kieuLung;
-    }
-
-    public String getLotAo() {
-        return lotAo;
-    }
-
-    public void setLotAo(String lotAo) {
-        this.lotAo = lotAo;
     }
 
     public String getKieuTuiTruoc() {

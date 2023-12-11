@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -60,12 +59,11 @@ public class OrderService implements OrderServiceImp {
         this.kpiRepository = kpiRepository;
     }
 
-    @Transactional
     @Override
-    public boolean createOrder(OrderRequest orderRequest) {
+    public int createOrder(OrderRequest orderRequest) {
         try {
-            List<OrderSuitRequest> orderSuitRequestList = orderRequest.getClientSuitRequestList();
-            List<OrderTrousersRequest> orderTrousersRequestList = orderRequest.getClientTrousersRequestsList();
+            List<OrderSuitRequest> orderSuitRequestList = orderRequest.getOrderSuitRequestList();
+            List<OrderTrousersRequest> orderTrousersRequestList = orderRequest.getOrderTrousersRequestList();
             List<OrderAccessoryRequest> orderAccessoryRequestList = orderRequest.getOrderAccessoryRequestList();
             Optional<ClientEntity> clientEntity = clientRepository.findById(orderRequest.getClient_id());
             Optional<OrderStatusEntity> orderStatusEntity = orderStatusRepository.findById(orderRequest.getOrderStatusRequest().getId());
@@ -84,6 +82,7 @@ public class OrderService implements OrderServiceImp {
                 orderEntity.setClientEntity(clientEntity.get());
                 orderEntity.setOrderStatusEntity(orderStatusEntity.get());
                 orderEntity.setTotal(totalOrder);
+                orderEntity.setPayment(orderRequest.getPayment());
                 orderEntity = orderRepository.save(orderEntity);
                 //Add item
                 if (orderSuitRequestList != null) {
@@ -97,13 +96,13 @@ public class OrderService implements OrderServiceImp {
                 }
                 //Update Kpi
                 updateKPIAddOrder(orderEntity);
-                return true;
+                return orderEntity.getId();
             } else {
-                return false;
+                return 0;
             }
         } catch (Exception e) {
             System.out.println(e);
-            return false;
+            return 0;
         }
     }
 

@@ -27,7 +27,6 @@ public class ConfigsSecurity  {
         http
                 .csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/order/all").authenticated()
                         .anyRequest().permitAll()
                 ).addFilterBefore(customJwtFilter,  AuthorizationFilter.class);
         return http.build();

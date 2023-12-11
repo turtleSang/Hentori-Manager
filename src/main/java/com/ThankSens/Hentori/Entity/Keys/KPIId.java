@@ -13,6 +13,10 @@ public class KPIId implements Serializable {
         this.year = year;
     }
 
+    public KPIId() {
+
+    }
+
     public int getMonth() {
         return month;
     }
