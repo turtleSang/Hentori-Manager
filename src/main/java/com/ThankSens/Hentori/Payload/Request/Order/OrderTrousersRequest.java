@@ -12,7 +12,16 @@ public class OrderTrousersRequest {
     private String kieuLai;
     private int price;
     private int amount;
+    private String fabric;
     private String note;
+
+    public String getFabric() {
+        return fabric;
+    }
+
+    public void setFabric(String fabric) {
+        this.fabric = fabric;
+    }
 
     public String getFormQuan() {
         return formQuan;

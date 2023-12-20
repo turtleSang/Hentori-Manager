@@ -8,10 +8,19 @@ public class OrderTrousersDto {
     private String kieuTuiSau;
     private String soTui;
     private String kieuLai;
+    private String fabric;
     private int price;
     private int amount;
     private String note;
     private int total;
+
+    public String getFabric() {
+        return fabric;
+    }
+
+    public void setFabric(String fabric) {
+        this.fabric = fabric;
+    }
 
     public int getId() {
         return id;

@@ -79,6 +79,21 @@ public class OrderController {
         return responseEntity;
     }
 
+    @GetMapping("/due")
+    public ResponseEntity<?> getDueOrder(){
+        List<OrderDto> orderDtoList = orderServiceImp.getDueOrder();
+        ResponseData responseData = new ResponseData();
+        if (orderDtoList == null) {
+            responseData.setCheck(true);
+            responseData.setMessenger("Not Found");
+            return new ResponseEntity<>(responseData, HttpStatus.NOT_FOUND);
+        }
+        responseData.setCheck(true);
+        responseData.setMessenger("Ok");
+        responseData.setObject(orderDtoList);
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
     @GetMapping("/processing")
     public ResponseEntity<?> getProcessingOrder(){
         List<OrderDto> orderDtoList = orderServiceImp.getProcessingOrder();
@@ -91,7 +106,7 @@ public class OrderController {
         responseData.setCheck(true);
         responseData.setMessenger("Ok");
         responseData.setObject(orderDtoList);
-        return new ResponseEntity<>(responseData, HttpStatus.FOUND);
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 
     @GetMapping("/date")

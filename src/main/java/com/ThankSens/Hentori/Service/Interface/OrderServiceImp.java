@@ -19,4 +19,5 @@ public interface OrderServiceImp {
     boolean updateOrderTrousers(int order_trousers_id, OrderTrousersRequest orderTrousersRequest);
     List<OrderDto> getProcessingOrder();
     List<OrderDto> getOrderByDate(String startDate, String endDate);
+    List<OrderDto> getDueOrder();
 }

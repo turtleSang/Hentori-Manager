@@ -9,9 +9,18 @@ public class OrderSuitDto {
     private String lotAo;
     private String kieuNut;
     private String kieuTui;
+    private String fabric;
     private int price;
     private int amount;
     private int total;
+
+    public String getFabric() {
+        return fabric;
+    }
+
+    public void setFabric(String fabric) {
+        this.fabric = fabric;
+    }
 
     public int getId() {
         return id;

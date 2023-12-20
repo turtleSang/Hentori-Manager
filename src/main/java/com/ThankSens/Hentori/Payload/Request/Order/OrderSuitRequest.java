@@ -9,7 +9,16 @@ public class OrderSuitRequest {
     private String kieuTui;
     private int price;
     private int amount;
+    private String fabric;
     private String note;
+
+    public String getFabric() {
+        return fabric;
+    }
+
+    public void setFabric(String fabric) {
+        this.fabric = fabric;
+    }
 
     public String getKieuAo() {
         return kieuAo;

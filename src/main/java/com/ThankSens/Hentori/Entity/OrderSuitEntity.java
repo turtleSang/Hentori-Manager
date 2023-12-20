@@ -36,6 +36,9 @@ public class OrderSuitEntity {
     @Column
     private int total;
 
+    @Column(length = 10)
+    private String fabric;
+
     @Column(length = 1000)
     private String note;
 
@@ -137,5 +140,13 @@ public class OrderSuitEntity {
 
     public void setOrderEntity(OrderEntity orderEntity) {
         this.orderEntity = orderEntity;
+    }
+
+    public String getFabric() {
+        return fabric;
+    }
+
+    public void setFabric(String fabric) {
+        this.fabric = fabric;
     }
 }

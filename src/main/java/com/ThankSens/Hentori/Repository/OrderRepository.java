@@ -17,4 +17,10 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
             value = "SELECT * FROM hentori.orders WHERE hentori.orders.create_at > ?1 and hentori.orders.create_at < ?2",
             nativeQuery = true)
     List<OrderEntity> findOrderByDate(Date startDate, Date endDate);
+
+    @Query(
+            value = "SELECT * FROM hentori.orders where hentori.orders.appointment_day < ?1 order by hentori.orders.appointment_day asc",
+            nativeQuery = true
+    )
+    List<OrderEntity> findDueOrder(Date now);
 }

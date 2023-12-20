@@ -28,6 +28,9 @@ public class OrderTrousersEntity {
     @Column
     private String kieuLai;
 
+    @Column(length = 10)
+    private String fabric;
+
     @Column
     private int price;
 
@@ -138,5 +141,13 @@ public class OrderTrousersEntity {
 
     public void setOrderEntity(OrderEntity orderEntity) {
         this.orderEntity = orderEntity;
+    }
+
+    public String getFabric() {
+        return fabric;
+    }
+
+    public void setFabric(String fabric) {
+        this.fabric = fabric;
     }
 }
