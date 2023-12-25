@@ -15,8 +15,6 @@ public interface OrderServiceImp {
     List<OrderDto> getAllOrder();
     OrderDto getDetailOrder(int id);
     boolean updateOrder(int order_id, OrderUpdateRequest orderUpdateRequest) throws ParseException;
-    boolean updateOrderSuit(int order_suit_id, OrderSuitRequest orderSuitRequest);
-    boolean updateOrderTrousers(int order_trousers_id, OrderTrousersRequest orderTrousersRequest);
     List<OrderDto> getProcessingOrder();
     List<OrderDto> getOrderByDate(String startDate, String endDate);
     List<OrderDto> getDueOrder();

@@ -138,11 +138,11 @@ public class OrderService implements OrderServiceImp {
     public boolean updateOrder(int order_id, OrderUpdateRequest orderUpdateRequest) {
         try {
             Optional<OrderEntity> orderEntity = orderRepository.findById(order_id);
-            Optional<ClientEntity> clientEntity = clientRepository.findById(orderUpdateRequest.getClient_id());
+            int payment = orderUpdateRequest.getPayment();
             Optional<OrderStatusEntity> orderStatusEntity = orderStatusRepository.findById(orderUpdateRequest.getOrderStatusRequest().getId());
-            if (orderEntity.isPresent() && clientEntity.isPresent() && orderStatusEntity.isPresent()) {
+            if (orderEntity.isPresent() && orderStatusEntity.isPresent() && payment > 0) {
                 orderEntity.get().setOrderStatusEntity(orderStatusEntity.get());
-                orderEntity.get().setClientEntity(clientEntity.get());
+                orderEntity.get().setPayment(payment);
                 orderEntity.get().setAppointmentDay(convertToDate.convertDate(orderUpdateRequest.getAppointmentDay()));
                 orderRepository.save(orderEntity.get());
                 return true;
@@ -154,35 +154,6 @@ public class OrderService implements OrderServiceImp {
         }
     }
 
-    @Override
-    public boolean updateOrderSuit(int order_suit_id, OrderSuitRequest orderSuitRequest) {
-        Optional<OrderSuitEntity> orderSuitEntityOptional = orderSuitRepository.findById(order_suit_id);
-        if (orderSuitEntityOptional.isPresent()) {
-            OrderSuitEntity orderSuitEntity = modelMapper.map(orderSuitRequest, OrderSuitEntity.class);
-            //reset different Attribute
-            orderSuitEntity.setOrderEntity(orderSuitEntityOptional.get().getOrderEntity());
-            orderSuitEntity.setTotal(orderSuitRequest.getPrice() * orderSuitRequest.getAmount());
-            orderSuitEntity.setId(order_suit_id);
-            orderSuitRepository.save(orderSuitEntity);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean updateOrderTrousers(int order_trousers_id, OrderTrousersRequest orderTrousersRequest) {
-        Optional<OrderTrousersEntity> orderTrousersEntityOptional = orderTrousersRepository.findById(order_trousers_id);
-        if (orderTrousersEntityOptional.isPresent()) {
-            OrderTrousersEntity orderTrousersEntity = modelMapper.map(orderTrousersRequest, OrderTrousersEntity.class);
-            //reset different Attribute
-            orderTrousersEntity.setOrderEntity(orderTrousersEntityOptional.get().getOrderEntity());
-            orderTrousersEntity.setTotal(orderTrousersRequest.getPrice() * orderTrousersRequest.getAmount());
-            orderTrousersEntity.setId(order_trousers_id);
-            orderTrousersRepository.save(orderTrousersEntity);
-            return true;
-        }
-        return false;
-    }
 
     @Override
     public List<OrderDto> getProcessingOrder() {

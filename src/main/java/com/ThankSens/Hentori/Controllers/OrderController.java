@@ -147,50 +147,5 @@ public class OrderController {
         return new ResponseEntity<>(responseData, httpStatus);
     }
 
-    @PutMapping("/update/suit/{order_suit_id}")
-    public ResponseEntity<?> updateSuitItem(@PathVariable int order_suit_id, @RequestBody OrderSuitRequest orderSuitRequest){
-        boolean check = false;
-        ResponseData responseData = new ResponseData();
-        HttpStatus httpStatus;
-        try {
-            check = orderServiceImp.updateOrderSuit(order_suit_id, orderSuitRequest);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        if (check) {
-            responseData.setMessenger("updated");
-            responseData.setCheck(true);
-            httpStatus = HttpStatus.OK;
-        } else {
-            responseData.setMessenger("Can not update");
-            responseData.setCheck(false);
-            httpStatus = HttpStatus.BAD_REQUEST;
-        }
-        return new ResponseEntity<>(responseData, httpStatus);
-    }
-
-    @PutMapping("/update/trousers/{order_trousers_id}")
-    public ResponseEntity<?> updateTrousersItem(@PathVariable int order_trousers_id, @RequestBody OrderTrousersRequest orderTrousersRequest){
-        boolean check = false;
-        ResponseData responseData = new ResponseData();
-        HttpStatus httpStatus;
-        try {
-            check = orderServiceImp.updateOrderTrousers(order_trousers_id, orderTrousersRequest);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        if (check) {
-            responseData.setMessenger("updated");
-            responseData.setCheck(true);
-            httpStatus = HttpStatus.OK;
-        } else {
-            responseData.setMessenger("Can not update");
-            responseData.setCheck(false);
-            httpStatus = HttpStatus.BAD_REQUEST;
-        }
-        return new ResponseEntity<>(responseData, httpStatus);
-    }
 
 }

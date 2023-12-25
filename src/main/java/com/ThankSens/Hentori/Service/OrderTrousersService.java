@@ -60,7 +60,7 @@ public class OrderTrousersService implements OrderTrousersImp {
             //Save update Suit
             orderTrousersRepository.save(newOrderTrousersEntity);
             //Update orderEntity;
-            int totalOrderEntity = orderEntity.getTotal() + newOrderTrousersEntity.getTotal() - orderEntity.getTotal();
+            int totalOrderEntity = orderEntity.getTotal() + newOrderTrousersEntity.getTotal() - orderTrousersEntity.getTotal();
             orderEntity.setTotal(totalOrderEntity);
             orderRepository.save(orderEntity);
             return true;

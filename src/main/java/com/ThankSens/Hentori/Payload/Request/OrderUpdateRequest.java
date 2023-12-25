@@ -6,8 +6,8 @@ import java.util.UUID;
 
 public class OrderUpdateRequest {
     private String appointmentDay;
-    private UUID client_id;
     private OrderStatusRequest orderStatusRequest;
+    private int payment;
 
     public String getAppointmentDay() {
         return appointmentDay;
@@ -17,19 +17,19 @@ public class OrderUpdateRequest {
         this.appointmentDay = appointmentDay;
     }
 
-    public UUID getClient_id() {
-        return client_id;
-    }
-
-    public void setClient_id(UUID client_id) {
-        this.client_id = client_id;
-    }
-
     public OrderStatusRequest getOrderStatusRequest() {
         return orderStatusRequest;
     }
 
     public void setOrderStatusRequest(OrderStatusRequest orderStatusRequest) {
         this.orderStatusRequest = orderStatusRequest;
+    }
+
+    public int getPayment() {
+        return payment;
+    }
+
+    public void setPayment(int payment) {
+        this.payment = payment;
     }
 }
