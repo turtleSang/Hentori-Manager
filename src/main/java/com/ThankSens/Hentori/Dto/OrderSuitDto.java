@@ -10,9 +10,18 @@ public class OrderSuitDto {
     private String kieuNut;
     private String kieuTui;
     private String fabric;
+    private String note;
     private int price;
     private int amount;
     private int total;
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 
     public String getFabric() {
         return fabric;

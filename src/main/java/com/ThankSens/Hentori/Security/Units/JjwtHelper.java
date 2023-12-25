@@ -12,7 +12,10 @@ import javax.crypto.SecretKey;
 
 
 @Component
-public class JjwtHelper {
+public class
+
+
+JjwtHelper {
     private String txtPrivate = "dGhhbmhzYW5nOTdxdWFkZXB0cmFpdmFub2l0aWVuZ3RoYXRsYW5nYXVkZXQ";
 
     public String createJwt(String json){
@@ -30,7 +33,6 @@ public class JjwtHelper {
             String jsonAdmin = claimsJws.getPayload().getSubject();
             return jsonAdmin;
         }catch (Exception e){
-            System.out.println(e);
             return null;
         }
 

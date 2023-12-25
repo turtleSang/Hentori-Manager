@@ -56,6 +56,7 @@ public class OrderTrousersService implements OrderTrousersImp {
             OrderTrousersEntity newOrderTrousersEntity = transferOrderTrousersRequestToOrderTrouserEntity(orderTrousersRequest);
             //set id for update Suit
             newOrderTrousersEntity.setId(trousersId);
+            newOrderTrousersEntity.setOrderEntity(orderEntity);
             //Save update Suit
             orderTrousersRepository.save(newOrderTrousersEntity);
             //Update orderEntity;
@@ -79,6 +80,7 @@ public class OrderTrousersService implements OrderTrousersImp {
             orderEntity.setTotal(newTotal);
             orderRepository.save(orderEntity);
             orderTrousersRepository.delete(orderTrousersEntity);
+            return true;
         }
         return false;
     }

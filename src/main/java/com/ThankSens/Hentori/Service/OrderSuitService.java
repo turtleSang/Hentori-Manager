@@ -48,16 +48,18 @@ public class OrderSuitService implements OrderSuitServiceImp {
         try {
             OrderSuitEntity orderSuitEntity = orderSuitEntityOptional.get();
             OrderEntity orderEntity = orderSuitEntity.getOrderEntity();
+
             //set get suitID and old total saved
             int suitId = orderSuitEntity.getId();
             //create new OrderEntity form request
             OrderSuitEntity newOrderSuitEntity = transferOrderSuitRequestToOrderSuitEntity(orderSuitRequest);
+            int totalOrderEntity = orderEntity.getTotal() - orderSuitEntity.getTotal() + newOrderSuitEntity.getTotal();
             //set id for update Suit
             newOrderSuitEntity.setId(suitId);
+            newOrderSuitEntity.setOrderEntity(orderEntity);
             //Save update Suit
             orderSuitRepository.save(newOrderSuitEntity);
             //Update orderEntity;
-            int totalOrderEntity = orderEntity.getTotal() - orderSuitEntity.getTotal() + newOrderSuitEntity.getTotal();
             orderEntity.setTotal(totalOrderEntity);
             orderRepository.save(orderEntity);
             return true;
