@@ -49,15 +49,14 @@ public class OrderTrousersService implements OrderTrousersImp {
         try {
             OrderTrousersEntity orderTrousersEntity = orderTrousersEntityOptional.get();
             OrderEntity orderEntity = orderTrousersEntity.getOrderEntity();
-            //set get suitID and old total saved
             int trousersId = orderTrousersEntity.getId();
 
-            //create new OrderEntity form request
+            //create new Entity form request
             OrderTrousersEntity newOrderTrousersEntity = transferOrderTrousersRequestToOrderTrouserEntity(orderTrousersRequest);
-            //set id for update Suit
+            //set id for update trousers
             newOrderTrousersEntity.setId(trousersId);
             newOrderTrousersEntity.setOrderEntity(orderEntity);
-            //Save update Suit
+            //Save update trousers
             orderTrousersRepository.save(newOrderTrousersEntity);
             //Update orderEntity;
             int totalOrderEntity = orderEntity.getTotal() + newOrderTrousersEntity.getTotal() - orderTrousersEntity.getTotal();

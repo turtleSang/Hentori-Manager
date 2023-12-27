@@ -1,9 +1,6 @@
 package com.ThankSens.Hentori.Payload.Request;
 
-import com.ThankSens.Hentori.Payload.Request.Order.OrderAccessoryRequest;
-import com.ThankSens.Hentori.Payload.Request.Order.OrderStatusRequest;
-import com.ThankSens.Hentori.Payload.Request.Order.OrderSuitRequest;
-import com.ThankSens.Hentori.Payload.Request.Order.OrderTrousersRequest;
+import com.ThankSens.Hentori.Payload.Request.Order.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +9,7 @@ public class OrderRequest {
     private List<OrderSuitRequest> orderSuitRequestList;
     private List<OrderTrousersRequest> orderTrousersRequestList;
     private List<OrderAccessoryRequest> orderAccessoryRequestList;
+    private List<OrderShirtRequest> orderShirtRequestList;
     private String appointmentDay;
     private UUID client_id;
     private int payment;
@@ -71,5 +69,13 @@ public class OrderRequest {
 
     public void setOrderStatusRequest(OrderStatusRequest orderStatusRequest) {
         this.orderStatusRequest = orderStatusRequest;
+    }
+
+    public List<OrderShirtRequest> getOrderShirtRequestList() {
+        return orderShirtRequestList;
+    }
+
+    public void setOrderShirtRequestList(List<OrderShirtRequest> orderShirtRequestList) {
+        this.orderShirtRequestList = orderShirtRequestList;
     }
 }

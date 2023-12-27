@@ -41,6 +41,9 @@ public class OrderEntity {
     @OneToMany(mappedBy = "orderEntity")
     private List<OrderAccessoryEntity> orderAccessoryEntityList;
 
+    @OneToMany(mappedBy = "orderEntity")
+    private List<OrderShirtEntity> orderShirtEntityList;
+
     public int getId() {
         return id;
     }
@@ -120,5 +123,13 @@ public class OrderEntity {
 
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
+    }
+
+    public List<OrderShirtEntity> getOrderShirtEntityList() {
+        return orderShirtEntityList;
+    }
+
+    public void setOrderShirtEntityList(List<OrderShirtEntity> orderShirtEntityList) {
+        this.orderShirtEntityList = orderShirtEntityList;
     }
 }

@@ -14,6 +14,7 @@ public class OrderDto {
     private List<OrderSuitDto> orderSuitDtoList;
     private List<OrderTrousersDto> orderTrousersDtoList;
     private List<OrderAccessoryDto> orderAccessoryDtoList;
+    private List<OrderShirtDto> orderShirtDtoList;
 
     public int getPayment() {
         return payment;
@@ -93,5 +94,13 @@ public class OrderDto {
 
     public void setOrderAccessoryDtoList(List<OrderAccessoryDto> orderAccessoryDtoList) {
         this.orderAccessoryDtoList = orderAccessoryDtoList;
+    }
+
+    public List<OrderShirtDto> getOrderShirtDtoList() {
+        return orderShirtDtoList;
+    }
+
+    public void setOrderShirtDtoList(List<OrderShirtDto> orderShirtDtoList) {
+        this.orderShirtDtoList = orderShirtDtoList;
     }
 }

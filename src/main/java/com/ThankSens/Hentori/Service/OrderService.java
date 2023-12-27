@@ -3,6 +3,7 @@ package com.ThankSens.Hentori.Service;
 import com.ThankSens.Hentori.Dto.*;
 import com.ThankSens.Hentori.Entity.*;
 import com.ThankSens.Hentori.Payload.Request.Order.OrderAccessoryRequest;
+import com.ThankSens.Hentori.Payload.Request.Order.OrderShirtRequest;
 import com.ThankSens.Hentori.Payload.Request.Order.OrderSuitRequest;
 import com.ThankSens.Hentori.Payload.Request.Order.OrderTrousersRequest;
 import com.ThankSens.Hentori.Payload.Request.OrderRequest;
@@ -32,6 +33,7 @@ public class OrderService implements OrderServiceImp {
     private OrderSuitRepository orderSuitRepository;
     private OrderTrousersRepository orderTrousersRepository;
     private OrderAccessoryRepository orderAccessoryRepository;
+    private OrderShirtRepository orderShirtRepository;
     private KPIServiceImp kpiServiceImp;
     private KPIRepository kpiRepository;
     private ModelMapper modelMapper;
@@ -46,13 +48,15 @@ public class OrderService implements OrderServiceImp {
                         OrderAccessoryRepository orderAccessoryRepository,
                         ModelMapper modelMapper, ConvertToDate convertToDate,
                         KPIServiceImp kpiServiceImp,
-                        KPIRepository kpiRepository) {
+                        KPIRepository kpiRepository,
+                        OrderShirtRepository orderShirtRepository) {
         this.clientRepository = clientRepository;
         this.orderRepository = orderRepository;
         this.orderStatusRepository = orderStatusRepository;
         this.orderSuitRepository = orderSuitRepository;
         this.orderTrousersRepository = orderTrousersRepository;
         this.orderAccessoryRepository = orderAccessoryRepository;
+        this.orderShirtRepository = orderShirtRepository;
         this.modelMapper = modelMapper;
         this.convertToDate = convertToDate;
         this.kpiServiceImp = kpiServiceImp;
@@ -60,22 +64,24 @@ public class OrderService implements OrderServiceImp {
     }
 
     @Override
+    @Transactional
     public int createOrder(OrderRequest orderRequest) {
         try {
             List<OrderSuitRequest> orderSuitRequestList = orderRequest.getOrderSuitRequestList();
             List<OrderTrousersRequest> orderTrousersRequestList = orderRequest.getOrderTrousersRequestList();
             List<OrderAccessoryRequest> orderAccessoryRequestList = orderRequest.getOrderAccessoryRequestList();
+            List<OrderShirtRequest> orderShirtRequestList = orderRequest.getOrderShirtRequestList();
             Optional<ClientEntity> clientEntity = clientRepository.findById(orderRequest.getClient_id());
             Optional<OrderStatusEntity> orderStatusEntity = orderStatusRepository.findById(orderRequest.getOrderStatusRequest().getId());
             //Check request
             if (clientEntity.isPresent() && orderStatusEntity.isPresent()
-                    && (orderSuitRequestList != null || orderTrousersRequestList != null || orderAccessoryRequestList != null)) {
+                    && (orderSuitRequestList != null || orderTrousersRequestList != null || orderAccessoryRequestList != null || orderShirtRequestList != null)) {
                 //Create new OrderEntity
                 OrderEntity orderEntity = new OrderEntity();
                 Date date = new Date();
                 Date appointmentDay = convertToDate.convertDate(orderRequest.getAppointmentDay());
                 //Calculate money order
-                int totalOrder = calculateTotal(orderSuitRequestList, orderTrousersRequestList, orderAccessoryRequestList);
+                int totalOrder = calculateTotal(orderSuitRequestList, orderTrousersRequestList, orderAccessoryRequestList, orderShirtRequestList);
                 // save Order
                 orderEntity.setCreateAt(date);
                 orderEntity.setAppointmentDay(appointmentDay);
@@ -93,6 +99,9 @@ public class OrderService implements OrderServiceImp {
                 }
                 if (orderAccessoryRequestList != null) {
                     addListAccessory(orderAccessoryRequestList, orderEntity);
+                }
+                if (orderShirtRequestList != null) {
+                    addListShirt(orderShirtRequestList, orderEntity);
                 }
                 //Update Kpi
                 updateKPIAddOrder(orderEntity);
@@ -193,8 +202,8 @@ public class OrderService implements OrderServiceImp {
     public List<OrderDto> getDueOrder() {
         Date date = new Date();
         List<OrderEntity> orderDueEntityList = orderRepository.findDueOrder(date);
-        if (!(orderDueEntityList.size()>0)){
-            return  null;
+        if (!(orderDueEntityList.size() > 0)) {
+            return null;
         }
         List<OrderDto> orderProcessingDtoList = new ArrayList<>();
         for (OrderEntity orderEntity : orderDueEntityList
@@ -208,7 +217,8 @@ public class OrderService implements OrderServiceImp {
     // Calculate total money
     private int calculateTotal(List<OrderSuitRequest> orderSuitRequestList,
                                List<OrderTrousersRequest> orderTrousersRequestList,
-                               List<OrderAccessoryRequest> orderAccessoryRequestList) {
+                               List<OrderAccessoryRequest> orderAccessoryRequestList,
+                               List<OrderShirtRequest> orderShirtRequestList) {
         int total = 0;
         if (orderSuitRequestList != null) {
             total += calculateSuitOrder(orderSuitRequestList);
@@ -218,6 +228,9 @@ public class OrderService implements OrderServiceImp {
         }
         if (orderAccessoryRequestList != null) {
             total += calculateAccessoryOrder(orderAccessoryRequestList);
+        }
+        if (orderShirtRequestList != null) {
+            total += calculateShirtOrder(orderShirtRequestList);
         }
         return total;
     }
@@ -247,6 +260,15 @@ public class OrderService implements OrderServiceImp {
         int total = 0;
         for (OrderAccessoryRequest orderAccessoryRequest : orderAccessoryRequestList) {
             total += orderAccessoryRequest.getAmount() * orderAccessoryRequest.getPrice();
+        }
+        return total;
+    }
+    // Calculate money Shirt
+    private int calculateShirtOrder(List<OrderShirtRequest> orderShirtRequestList) {
+        int total = 0;
+        for (OrderShirtRequest orderShirtRequest : orderShirtRequestList
+        ) {
+            total += orderShirtRequest.getPrice() * orderShirtRequest.getAmount();
         }
         return total;
     }
@@ -287,7 +309,6 @@ public class OrderService implements OrderServiceImp {
 
     // Save list Accessory
     private void addListAccessory(List<OrderAccessoryRequest> orderAccessoryRequestList, OrderEntity orderEntity) throws Exception {
-
         try {
             List<OrderAccessoryEntity> orderAccessoryEntityList = new ArrayList<>();
             for (OrderAccessoryRequest orderAccessoryRequest : orderAccessoryRequestList) {
@@ -302,6 +323,22 @@ public class OrderService implements OrderServiceImp {
         }
     }
 
+    //Save list Shirt
+    private void addListShirt(List<OrderShirtRequest> orderShirtRequestList, OrderEntity orderEntity) throws Exception {
+        try {
+            List<OrderShirtEntity> orderShirtEntityList = new ArrayList<>();
+            for (OrderShirtRequest orderShirtRequest : orderShirtRequestList) {
+                OrderShirtEntity orderShirtEntity = modelMapper.map(orderShirtRequest, OrderShirtEntity.class);
+                orderShirtEntity.setOrderEntity(orderEntity);
+                orderShirtEntity.setTotal(orderShirtRequest.getAmount() * orderShirtRequest.getPrice());
+                orderShirtEntityList.add(orderShirtEntity);
+            }
+            orderShirtRepository.saveAll(orderShirtEntityList);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
     // transfer OrderEntity to OrderDto
     private OrderDto createOrderDtoFromOrderEntity(OrderEntity orderEntity) {
         OrderDto orderDto = modelMapper.map(orderEntity, OrderDto.class);
@@ -310,11 +347,13 @@ public class OrderService implements OrderServiceImp {
         List<OrderSuitDto> orderSuitDtoList = createOrderSuitDtoList(orderEntity.getOrderSuitEntityList());
         List<OrderTrousersDto> orderTrousersDtoList = createOrderTrousersDtoList(orderEntity.getOrderTrousersEntityList());
         List<OrderAccessoryDto> orderAccessoryDtoList = createOrderAccessoryDtoList(orderEntity.getOrderAccessoryEntityList());
+        List<OrderShirtDto> orderShirtDtoList = createOrderShirtDtoList(orderEntity.getOrderShirtEntityList());
         orderDto.setOrderStatusDto(orderStatusDto);
         orderDto.setOrderClientDto(orderClientDto);
         orderDto.setOrderSuitDtoList(orderSuitDtoList);
         orderDto.setOrderTrousersDtoList(orderTrousersDtoList);
         orderDto.setOrderAccessoryDtoList(orderAccessoryDtoList);
+        orderDto.setOrderShirtDtoList(orderShirtDtoList);
         return orderDto;
     }
 
@@ -361,17 +400,31 @@ public class OrderService implements OrderServiceImp {
         return null;
     }
 
+    private List<OrderShirtDto> createOrderShirtDtoList(List<OrderShirtEntity> orderShirtEntityList){
+        if (orderShirtEntityList.size() > 0) {
+            List<OrderShirtDto> orderShirtDtoArrayList = new ArrayList<>();
+            for (OrderShirtEntity orderShirtEntity: orderShirtEntityList
+                 ) {
+                OrderShirtDto orderShirtDto = modelMapper.map(orderShirtEntity, OrderShirtDto.class);
+                orderShirtDtoArrayList.add(orderShirtDto);
+            }
+            return orderShirtDtoArrayList;
+        }
+        return null;
+
+    }
+
     //update KPI
-    private void updateKPIAddOrder(OrderEntity orderEntity) throws Exception  {
+    private void updateKPIAddOrder(OrderEntity orderEntity) throws Exception {
 
         Date createAt = orderEntity.getCreateAt();
         Instant instant = createAt.toInstant();
         ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
         int year = zonedDateTime.getYear();
         int month = zonedDateTime.getMonthValue();
-        KPIEntity kpiEntity = kpiServiceImp.getKPI(year,month);
-        if (kpiEntity == null){
-            kpiEntity =  kpiServiceImp.createKPI(year,month,0);
+        KPIEntity kpiEntity = kpiServiceImp.getKPI(year, month);
+        if (kpiEntity == null) {
+            kpiEntity = kpiServiceImp.createKPI(year, month, 0);
         }
         kpiEntity.setComplete(kpiEntity.getComplete() + orderEntity.getTotal());
         kpiRepository.save(kpiEntity);
