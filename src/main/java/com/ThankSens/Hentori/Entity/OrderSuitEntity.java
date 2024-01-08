@@ -19,6 +19,9 @@ public class OrderSuitEntity {
     private String kieuVeAo;
 
     @Column
+    private String kieuXe;
+
+    @Column
     private String lotAo;
 
     @Column
@@ -148,5 +151,13 @@ public class OrderSuitEntity {
 
     public void setFabric(String fabric) {
         this.fabric = fabric;
+    }
+
+    public String getKieuXe() {
+        return kieuXe;
+    }
+
+    public void setKieuXe(String kieuXe) {
+        this.kieuXe = kieuXe;
     }
 }
