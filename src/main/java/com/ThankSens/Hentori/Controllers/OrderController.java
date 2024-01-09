@@ -1,13 +1,10 @@
 package com.ThankSens.Hentori.Controllers;
 
 import com.ThankSens.Hentori.Dto.OrderDto;
-import com.ThankSens.Hentori.Payload.Request.Order.OrderSuitRequest;
-import com.ThankSens.Hentori.Payload.Request.Order.OrderTrousersRequest;
 import com.ThankSens.Hentori.Payload.Request.OrderRequest;
 import com.ThankSens.Hentori.Payload.Request.OrderUpdateRequest;
 import com.ThankSens.Hentori.Payload.Response.ResponseData;
 import com.ThankSens.Hentori.Service.Interface.OrderServiceImp;
-import com.ThankSens.Hentori.Service.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +19,7 @@ import java.util.List;
 public class OrderController {
     private OrderServiceImp orderServiceImp;
     private ModelMapper modelMapper;
+    private final int size = 6;
 
     public OrderController(OrderServiceImp orderServiceImp, ModelMapper modelMapper) {
         this.orderServiceImp = orderServiceImp;
@@ -79,9 +77,19 @@ public class OrderController {
         return responseEntity;
     }
 
+    @GetMapping("/due/page")
+    public ResponseEntity<?> getPageDue(){
+        int numberPage = orderServiceImp.getPageDue();
+        ResponseData responseData = new ResponseData();
+        responseData.setCheck(true);
+        responseData.setObject(numberPage);
+        responseData.setMessenger("OK");
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
     @GetMapping("/due")
-    public ResponseEntity<?> getDueOrder(){
-        List<OrderDto> orderDtoList = orderServiceImp.getDueOrder();
+    public ResponseEntity<?> getDueOrder(@RequestParam(defaultValue = "0") int pageNumber){
+        List<OrderDto> orderDtoList = orderServiceImp.getDueOrder(pageNumber);
         ResponseData responseData = new ResponseData();
         if (orderDtoList == null) {
             responseData.setCheck(true);

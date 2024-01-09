@@ -14,9 +14,12 @@ import com.ThankSens.Hentori.Service.Interface.OrderServiceImp;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 
+import java.awt.print.Pageable;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -38,6 +41,7 @@ public class OrderService implements OrderServiceImp {
     private KPIRepository kpiRepository;
     private ModelMapper modelMapper;
     private ConvertToDate convertToDate;
+    private final int pageSizeDefault = 5;
 
     @Autowired
     public OrderService(ClientRepository clientRepository,
@@ -117,6 +121,7 @@ public class OrderService implements OrderServiceImp {
 
     @Override
     public List<OrderDto> getAllOrder() {
+        PageRequest pageRequest = PageRequest.of(0, 10);
         List<OrderEntity> orderEntityList = orderRepository.findAll();
         if (!(orderEntityList.size() > 0)) {
             return null;
@@ -199,9 +204,10 @@ public class OrderService implements OrderServiceImp {
     }
 
     @Override
-    public List<OrderDto> getDueOrder() {
+    public List<OrderDto> getDueOrder(int PageNumber) {
         Date date = new Date();
-        List<OrderEntity> orderDueEntityList = orderRepository.findDueOrder(date);
+        PageRequest pageRequest = PageRequest.of( PageNumber, pageSizeDefault);
+        List<OrderEntity> orderDueEntityList = orderRepository.findDueOrder(date, pageRequest);
         if (!(orderDueEntityList.size() > 0)) {
             return null;
         }
@@ -213,6 +219,15 @@ public class OrderService implements OrderServiceImp {
         }
         return orderProcessingDtoList;
     }
+
+    @Override
+    public int getPageDue() {
+        PageRequest pageRequest = PageRequest.of(0, pageSizeDefault);
+        Page<OrderEntity> orderEntityPage = orderRepository.findDuePage(new Date(), pageRequest);
+        int total = orderEntityPage.getTotalPages();
+        return total;
+    }
+
 
     // Calculate total money
     private int calculateTotal(List<OrderSuitRequest> orderSuitRequestList,
