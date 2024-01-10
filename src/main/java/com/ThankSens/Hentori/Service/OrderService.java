@@ -120,10 +120,10 @@ public class OrderService implements OrderServiceImp {
     }
 
     @Override
-    public List<OrderDto> getAllOrder() {
-        PageRequest pageRequest = PageRequest.of(0, 10);
-        List<OrderEntity> orderEntityList = orderRepository.findAll();
-        if (!(orderEntityList.size() > 0)) {
+    public List<OrderDto> getAllOrder(int pageNumber) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSizeDefault);
+        Page<OrderEntity> orderEntityList = orderRepository.findAll(pageRequest);
+        if (orderEntityList.isEmpty()) {
             return null;
         }
         List<OrderDto> orderDtoList = new ArrayList<>();
@@ -134,6 +134,14 @@ public class OrderService implements OrderServiceImp {
         }
         return orderDtoList;
     }
+
+    @Override
+    public int getPageAll() {
+        PageRequest pageRequest = PageRequest.of(0, pageSizeDefault);
+        Page<OrderEntity> orderEntityList = orderRepository.findAll(pageRequest);
+        return orderEntityList.getTotalPages();
+    }
+
 
     @Override
     public OrderDto getDetailOrder(int id) {
@@ -170,9 +178,10 @@ public class OrderService implements OrderServiceImp {
 
 
     @Override
-    public List<OrderDto> getProcessingOrder() {
-        List<OrderEntity> orderEntityProcessingList = orderRepository.findProcessingOrder();
-        if (!(orderEntityProcessingList.size() > 0)) {
+    public List<OrderDto> getProcessingOrder(int pageNumber) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSizeDefault);
+        Page<OrderEntity> orderEntityProcessingList = orderRepository.findProcessingOrder(pageRequest);
+        if (orderEntityProcessingList.isEmpty()) {
             return null;
         }
         List<OrderDto> orderProcessingDtoList = new ArrayList<>();
@@ -185,12 +194,16 @@ public class OrderService implements OrderServiceImp {
     }
 
     @Override
-    public List<OrderDto> getOrderByDate(String start, String end) {
+    public List<OrderDto> getOrderByDate(String start, String end, int pageNumber) {
         try {
+            PageRequest pageRequest = PageRequest.of(pageNumber, pageSizeDefault);
             Date startDate = convertToDate.convertDate(start);
             Date endDate = convertToDate.convertDate(end);
-            List<OrderEntity> orderEntityList = orderRepository.findOrderByDate(startDate, endDate);
+            Page<OrderEntity> orderEntityList = orderRepository.findOrderByDate(startDate, endDate, pageRequest);
             List<OrderDto> orderDtoList = new ArrayList<>();
+            if (orderEntityList.isEmpty()){
+                return null;
+            }
             for (OrderEntity orderEntity : orderEntityList
             ) {
                 OrderDto orderDto = createOrderDtoFromOrderEntity(orderEntity);
@@ -202,6 +215,24 @@ public class OrderService implements OrderServiceImp {
             return null;
         }
     }
+
+    @Override
+    public int getPageDate(String start, String end) {
+        try {
+            PageRequest pageRequest = PageRequest.of(0, pageSizeDefault);
+            Date startDate = convertToDate.convertDate(start);
+            Date endDate = convertToDate.convertDate(end);
+            Page<OrderEntity> orderEntityList = orderRepository.findOrderByDate(startDate, endDate, pageRequest);
+            if (orderEntityList.isEmpty()){
+                return 0;
+            }
+            return orderEntityList.getTotalPages();
+        }catch (Exception e){
+            return 0;
+        }
+
+    }
+
 
     @Override
     public List<OrderDto> getDueOrder(int PageNumber) {
@@ -226,6 +257,38 @@ public class OrderService implements OrderServiceImp {
         Page<OrderEntity> orderEntityPage = orderRepository.findDuePage(new Date(), pageRequest);
         int total = orderEntityPage.getTotalPages();
         return total;
+    }
+
+    @Override
+    public List<OrderDto> getCompleteOrder(int pageNumber) {
+        Optional<OrderStatusEntity> orderStatusEntityOptional = orderStatusRepository.findById(3);
+        if (!(orderStatusEntityOptional.isPresent())){
+            return null;
+        }
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSizeDefault);
+        Page<OrderEntity> orderEntityPage = orderRepository.findByOrderStatusEntityEquals(orderStatusEntityOptional.get(), pageRequest);
+        if (orderEntityPage.isEmpty()){
+            return null;
+        }
+        List<OrderDto> orderDtoList = new ArrayList<>();
+        for (OrderEntity orderEntity: orderEntityPage
+             ) {
+            OrderDto orderDto = createOrderDtoFromOrderEntity(orderEntity);
+            orderDtoList.add(orderDto);
+        }
+
+        return orderDtoList;
+    }
+
+    @Override
+    public int getPageComplete() {
+        Optional<OrderStatusEntity> orderStatusEntityOptional = orderStatusRepository.findById(3);
+        if (!(orderStatusEntityOptional.isPresent())){
+            return 0;
+        }
+        PageRequest pageRequest = PageRequest.of(0, pageSizeDefault);
+        Page<OrderEntity> orderEntityPage = orderRepository.findByOrderStatusEntityEquals(orderStatusEntityOptional.get(), pageRequest);
+        return orderEntityPage.getTotalPages();
     }
 
 

@@ -44,8 +44,8 @@ public class OrderController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAllOrders() {
-        List<OrderDto> orderDtoList = orderServiceImp.getAllOrder();
+    public ResponseEntity<?> getAllOrders(@RequestParam(defaultValue = "0") int pageNumber) {
+        List<OrderDto> orderDtoList = orderServiceImp.getAllOrder(pageNumber);
         ResponseData responseData = new ResponseData();
         if (orderDtoList == null) {
             responseData.setCheck(true);
@@ -55,7 +55,17 @@ public class OrderController {
         responseData.setCheck(true);
         responseData.setMessenger("Ok");
         responseData.setObject(orderDtoList);
-        return new ResponseEntity<>(responseData, HttpStatus.FOUND);
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
+    @GetMapping("/all/page")
+    public ResponseEntity<?> getPageAll(){
+        int numberPage = orderServiceImp.getPageAll();
+        ResponseData responseData = new ResponseData();
+        responseData.setCheck(true);
+        responseData.setObject(numberPage);
+        responseData.setMessenger("OK");
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 
     @GetMapping("/detail/{order_id}")
@@ -103,8 +113,8 @@ public class OrderController {
     }
 
     @GetMapping("/processing")
-    public ResponseEntity<?> getProcessingOrder(){
-        List<OrderDto> orderDtoList = orderServiceImp.getProcessingOrder();
+    public ResponseEntity<?> getProcessingOrder(@RequestParam(defaultValue = "0") int pageNumber){
+        List<OrderDto> orderDtoList = orderServiceImp.getProcessingOrder(pageNumber);
         ResponseData responseData = new ResponseData();
         if (orderDtoList == null) {
             responseData.setCheck(true);
@@ -117,9 +127,34 @@ public class OrderController {
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 
+    @GetMapping("/complete")
+    public ResponseEntity<?> getCompleteOrder(@RequestParam(defaultValue = "0") int pageNumber){
+        List<OrderDto> orderDtoList = orderServiceImp.getCompleteOrder(pageNumber);
+        ResponseData responseData = new ResponseData();
+        if (orderDtoList == null) {
+            responseData.setCheck(true);
+            responseData.setMessenger("Not Found");
+            return new ResponseEntity<>(responseData, HttpStatus.NOT_FOUND);
+        }
+        responseData.setCheck(true);
+        responseData.setMessenger("Ok");
+        responseData.setObject(orderDtoList);
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
+    @GetMapping("/complete/page")
+    public ResponseEntity<?> getPageComplete(){
+        int numberPage = orderServiceImp.getPageComplete();
+        ResponseData responseData = new ResponseData();
+        responseData.setCheck(true);
+        responseData.setObject(numberPage);
+        responseData.setMessenger("OK");
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
     @GetMapping("/date")
-    public ResponseEntity<?> getOrderByDate(@RequestParam String startDate, @RequestParam String endDate){
-        List<OrderDto> orderDtoList = orderServiceImp.getOrderByDate(startDate,endDate);
+    public ResponseEntity<?> getOrderByDate(@RequestParam String startDate, @RequestParam String endDate, @RequestParam(defaultValue = "0") int pageNumber){
+        List<OrderDto> orderDtoList = orderServiceImp.getOrderByDate(startDate,endDate,pageNumber);
         ResponseData responseData = new ResponseData();
         if (orderDtoList == null) {
             responseData.setCheck(true);
@@ -130,6 +165,16 @@ public class OrderController {
         responseData.setMessenger("Ok");
         responseData.setObject(orderDtoList);
         return new ResponseEntity<>(responseData, HttpStatus.FOUND);
+    }
+
+    @GetMapping("/date/page")
+    public ResponseEntity<?> getPageDate(@RequestParam String startDate, @RequestParam String endDate){
+        int numberPage = orderServiceImp.getPageDate(startDate, endDate);
+        ResponseData responseData = new ResponseData();
+        responseData.setCheck(true);
+        responseData.setObject(numberPage);
+        responseData.setMessenger("OK");
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 
     @PutMapping("/update/{order_id}")
