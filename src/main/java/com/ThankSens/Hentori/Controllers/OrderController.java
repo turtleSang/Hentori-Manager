@@ -86,16 +86,6 @@ public class OrderController {
         return responseEntity;
     }
 
-    @GetMapping("/due/page")
-    public ResponseEntity<?> getPageDue(){
-        int numberPage = orderServiceImp.getPageDue();
-        ResponseData responseData = new ResponseData();
-        responseData.setCheck(true);
-        responseData.setObject(numberPage);
-        responseData.setMessenger("OK");
-        return new ResponseEntity<>(responseData, HttpStatus.OK);
-    }
-
     @GetMapping("/due")
     public ResponseEntity<?> getDueOrder(@RequestParam(defaultValue = "0") int pageNumber){
         List<OrderDto> orderDtoList = orderServiceImp.getDueOrder(pageNumber);
@@ -111,6 +101,16 @@ public class OrderController {
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 
+    @GetMapping("/due/page")
+    public ResponseEntity<?> getPageDue(){
+        int numberPage = orderServiceImp.getPageDue();
+        ResponseData responseData = new ResponseData();
+        responseData.setCheck(true);
+        responseData.setObject(numberPage);
+        responseData.setMessenger("OK");
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
     @GetMapping("/processing")
     public ResponseEntity<?> getProcessingOrder(@RequestParam(defaultValue = "0") int pageNumber){
         List<OrderDto> orderDtoList = orderServiceImp.getProcessingOrder(pageNumber);
@@ -123,6 +123,16 @@ public class OrderController {
         responseData.setCheck(true);
         responseData.setMessenger("Ok");
         responseData.setObject(orderDtoList);
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
+    @GetMapping("/processing/page")
+    public ResponseEntity<?> getPageProcessing(){
+        int numberPage = orderServiceImp.getPageProcessing();
+        ResponseData responseData = new ResponseData();
+        responseData.setCheck(true);
+        responseData.setObject(numberPage);
+        responseData.setMessenger("OK");
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 

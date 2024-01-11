@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
-    @Query( value = "select*from hentori.orders where hentori.orders.status_id != 3", nativeQuery = true)
+    @Query( value = "SELECT * FROM hentori.orders where hentori.orders.status_id != 3", nativeQuery = true)
     Page<OrderEntity> findProcessingOrder(Pageable pageable);
 
     @Query(

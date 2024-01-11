@@ -194,6 +194,14 @@ public class OrderService implements OrderServiceImp {
     }
 
     @Override
+    public int getPageProcessing() {
+        PageRequest pageRequest = PageRequest.of(0, pageSizeDefault);
+        Page<OrderEntity> orderEntityProcessingList = orderRepository.findProcessingOrder(pageRequest);
+        int total = orderEntityProcessingList.getTotalPages();
+        return total;
+    }
+
+    @Override
     public List<OrderDto> getOrderByDate(String start, String end, int pageNumber) {
         try {
             PageRequest pageRequest = PageRequest.of(pageNumber, pageSizeDefault);

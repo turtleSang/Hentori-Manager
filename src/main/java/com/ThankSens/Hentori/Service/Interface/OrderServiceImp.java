@@ -14,6 +14,7 @@ public interface OrderServiceImp {
     OrderDto getDetailOrder(int id);
     boolean updateOrder(int order_id, OrderUpdateRequest orderUpdateRequest) throws ParseException;
     List<OrderDto> getProcessingOrder(int pageNumber);
+    int getPageProcessing();
     List<OrderDto> getOrderByDate(String startDate, String endDate, int pageNumber);
     int getPageDate(String start, String end);
     List<OrderDto> getDueOrder(int PageNumber);
