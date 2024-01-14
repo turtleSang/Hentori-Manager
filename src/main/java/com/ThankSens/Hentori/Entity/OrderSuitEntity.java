@@ -25,6 +25,9 @@ public class OrderSuitEntity {
     private String lotAo;
 
     @Column
+    private String kieuXe;
+
+    @Column
     private String kieuNut;
 
     @Column
