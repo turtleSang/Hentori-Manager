@@ -127,6 +127,8 @@ public class OrderController {
     }
 
     @GetMapping("/processing/page")
+
+
     public ResponseEntity<?> getPageProcessing(){
         int numberPage = orderServiceImp.getPageProcessing();
         ResponseData responseData = new ResponseData();
@@ -173,7 +175,7 @@ public class OrderController {
         responseData.setCheck(true);
         responseData.setMessenger("Ok");
         responseData.setObject(orderDtoList);
-        return new ResponseEntity<>(responseData, HttpStatus.FOUND);
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 
     @GetMapping("/date/page")

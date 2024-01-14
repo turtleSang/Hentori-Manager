@@ -7,6 +7,7 @@ public class OrderSuitDto {
     private String formAo;
     private String kieuVeAo;
     private String lotAo;
+    private String kieuXe;
     private String kieuNut;
     private String kieuTui;
     private String fabric;
@@ -109,5 +110,13 @@ public class OrderSuitDto {
 
     public void setTotal(int total) {
         this.total = total;
+    }
+
+    public String getKieuXe() {
+        return kieuXe;
+    }
+
+    public void setKieuXe(String kieuXe) {
+        this.kieuXe = kieuXe;
     }
 }

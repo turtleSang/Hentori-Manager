@@ -7,6 +7,7 @@ public class OrderShirtDto {
     private String kieuDinh;
     private String note;
     private String fabric;
+    private int total;
     private int price;
     private int amount;
 
@@ -72,5 +73,13 @@ public class OrderShirtDto {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 }

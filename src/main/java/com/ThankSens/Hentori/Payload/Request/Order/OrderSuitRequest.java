@@ -5,6 +5,7 @@ public class OrderSuitRequest {
     private String formAo;
     private String kieuVeAo;
     private String lotAo;
+    private String kieuXe;
     private String kieuNut;
     private String kieuTui;
     private int price;
@@ -90,5 +91,13 @@ public class OrderSuitRequest {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getKieuXe() {
+        return kieuXe;
+    }
+
+    public void setKieuXe(String kieuXe) {
+        this.kieuXe = kieuXe;
     }
 }
