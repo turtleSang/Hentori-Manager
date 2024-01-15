@@ -7,7 +7,6 @@ public class OrderShirtDto {
     private String kieuDinh;
     private String note;
     private String fabric;
-    private int total;
     private int price;
     private int total;
     private int amount;

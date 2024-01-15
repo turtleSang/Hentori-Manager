@@ -1,0 +1,174 @@
+[33mcommit 9c41051f279aa526c40ac170716d5a822371c543[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Merge: 306fc24 cc14026
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Mon Jan 15 01:42:32 2024 +0700
+
+    finish pagination
+
+[33mcommit cc14026f2dabd39ff9be56da13d5e5de7cb50288[m[33m ([m[1;31morigin/pagination[m[33m, [m[1;32mpagination[m[33m)[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Mon Jan 15 01:41:32 2024 +0700
+
+    fix shirt and pagination finish
+
+[33mcommit 4e205840f7da0f4159df96a3d0842e3f97fb2c5d[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Fri Jan 12 02:45:16 2024 +0700
+
+    fix processing page
+
+[33mcommit 0406546f140143199f661ef3b8c9df27dab95c29[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Thu Jan 11 01:39:23 2024 +0700
+
+    update pagination for all API order
+
+[33mcommit 857298be0912a74152f9baee22fa6fc6eacbbb87[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Thu Jan 11 01:30:27 2024 +0700
+
+    update API get complete Order
+
+[33mcommit de9a8306d94a1a09a9e62304264dcbf206088d4e[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Wed Jan 10 01:09:29 2024 +0700
+
+    update pagination due order
+
+[33mcommit 306fc24cfec261aa5778738d364fc72a062f294e[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Tue Jan 9 01:11:39 2024 +0700
+
+    fix shirt
+
+[33mcommit e3f91b006fcbe6cc6e5a6743f10852f5ccad2afe[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Thu Dec 28 01:48:55 2023 +0700
+
+    update service shirt
+
+[33mcommit 0b4c8c11df7d53ce4e616ca887a1f00c9f6a9adc[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Tue Dec 26 02:32:33 2023 +0700
+
+    update fix order update
+
+[33mcommit e1a211635b8c7eb151485746d925d9fe0f62368e[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Tue Dec 26 00:46:26 2023 +0700
+
+    Update suit and trousers service
+
+[33mcommit af507da70ffc9a3871f271791d9d8dbef450a424[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Thu Dec 21 02:03:25 2023 +0700
+
+    update suit and trousers service
+
+[33mcommit f2bfc373f5b2f1d40edcc53763c0012804d1328d[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Tue Dec 12 02:28:25 2023 +0700
+
+    update conected to font-end
+
+[33mcommit 8f5456320462877b4f3d977401440694b3c7c716[m[33m ([m[1;31morigin/Order[m[33m, [m[1;32mOrder[m[33m)[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Sun Dec 3 12:21:27 2023 +0700
+
+    fix comment
+
+[33mcommit 64d895c58b27687b1a838247e0ca04079850fb6e[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Fri Dec 1 01:05:23 2023 +0700
+
+    update Kpi when add new order
+
+[33mcommit f09c217e85b9a4dba4637a26c9cfe9441abc02d7[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Wed Nov 29 22:39:41 2023 +0700
+
+    update redis configs and KPI Service
+
+[33mcommit d36771573d7094a8eef8e34e988fc4bd5ac49fcc[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Sun Nov 26 16:56:21 2023 +0700
+
+    finsih get order by Date
+
+[33mcommit 61557f7a430453557d72420d89cf674facd2924a[m[33m ([m[1;31morigin/security[m[33m, [m[1;32msecurity[m[33m)[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Thu Nov 23 01:48:58 2023 +0700
+
+    finish Anuthentication
+
+[33mcommit 4ac1445342918b507a7013638cce3c5a7e560d83[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Wed Nov 22 01:34:23 2023 +0700
+
+    update signin create jwt
+
+[33mcommit f557c65e85b9032b7090906d1be1f0a10d1fa14a[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Sun Nov 19 23:12:17 2023 +0700
+
+    update create order
+
+[33mcommit 73772334300ec73f75375232ca1cd9a5b840585e[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Sun Nov 19 22:18:31 2023 +0700
+
+    set up security
+
+[33mcommit 091fb75f533426097ab4e8527c95abb9b45018d5[m[33m ([m[1;31morigin/UpdateOrder[m[33m, [m[1;32mUpdateOrder[m[33m)[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Sun Nov 19 22:01:18 2023 +0700
+
+    update get processing order
+
+[33mcommit 4efcd78f46ea035b2fe02b94194c0b09c468f64b[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Sat Nov 18 23:37:58 2023 +0700
+
+    finish update order, order suit, order trousers
+
+[33mcommit f47f3d3f052c9482280c1553f3a910ec82e83269[m[33m ([m[1;31morigin/GetOrder[m[33m, [m[1;32mGetOrder[m[33m)[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Thu Nov 16 01:35:08 2023 +0700
+
+    finish get detail order and update create order
+
+[33mcommit 0b901c70192d5985d72fd6e741a3a8abbd1f909c[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Wed Nov 15 01:06:43 2023 +0700
+
+    Finish get All order
+
+[33mcommit 5e7a1563efae8e5abb3fbf2654ba89a12020ff09[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Tue Nov 14 01:38:52 2023 +0700
+
+    Get order and suit
+
+[33mcommit c54b61fa887cf97708d411fa2f1b4e0cf19877b9[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Fri Nov 10 02:28:46 2023 +0700
+
+    update calculate money and create order
+
+[33mcommit 69ae935d10ae1e7f6dd1df1be80251709aff8834[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Wed Nov 8 16:49:29 2023 +0700
+
+    Fix date and appointment day
+
+[33mcommit 11cc49fa28b7b4d02d8633eeae8231cda5d30f37[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Wed Nov 8 02:05:10 2023 +0700
+
+    done Order simple
+
+[33mcommit 5f9fb4b539dee9153771d5e92e335a00ac5bbbf1[m
+Author: turtle <nguyenthanhsang60309@outlook.com>
+Date:   Wed Nov 8 01:42:04 2023 +0700
+
+    first push, complete manager client;
