@@ -100,7 +100,7 @@ public class ClientService implements ClientServiceImp {
             };
             if(clientRequest.getUsername() != null && clientRequest.getUsername() != clientEntity.getUsername()){
                 clientEntity.setPhoneNumber(clientRequest.getPhoneNumber());
-            };
+            }
 
             if (clientRequest.getClientSuitRequest() != null){
                 Optional<ClientSuitEntity> clientSuitEntityOptional = clientSuitRepository.findById(client_id);
@@ -130,7 +130,27 @@ public class ClientService implements ClientServiceImp {
         }
     }
 
+    @Override
+    public List<String> searchByName(String name) {
+        String nameQuery = "%" + name + "%";
+        return clientRepository.findAllName(nameQuery);
+    }
 
+    @Override
+    public List<ClientDto> findAllByName(String name) {
+        String nameQuery = "%" + name + "%";
+        List<ClientEntity> clientEntityList = clientRepository.findClientEntityByName(nameQuery);
+        List<ClientDto> clientDtoList = new ArrayList<>();
+        if (clientEntityList.size() >0){
+            for (ClientEntity clientEntity: clientEntityList
+                 ) {
+                ClientDto clientDto = modelMapper.map(clientEntity, ClientDto.class);
+                clientDtoList.add(clientDto);
+            }
+            return clientDtoList;
+        }
+        return null;
+    }
 
 
 }

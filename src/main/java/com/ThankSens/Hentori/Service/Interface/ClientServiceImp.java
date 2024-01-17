@@ -5,10 +5,13 @@ import com.ThankSens.Hentori.Entity.ClientEntity;
 import com.ThankSens.Hentori.Payload.Request.ClientRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface ClientServiceImp {
     ClientDto findClientByPhone(String phoneNumber);
     ClientEntity createClient(ClientRequest clientRequest);
     boolean updateClient(ClientRequest clientRequest, UUID id);
+    List<String> searchByName(String name);
+    List<ClientDto> findAllByName(String name);
 }
