@@ -52,9 +52,12 @@ public class OrderShirtService implements OrderShirtServiceImp {
             newOrderShirtEntity.setId(shirtId);
             newOrderShirtEntity.setOrderEntity(orderEntity);
             //Update new total for orders
+
             int totalOrderEntity = orderEntity.getTotal() - orderShirtEntity.getTotal() + newOrderShirtEntity.getTotal();
             orderEntity.setTotal(totalOrderEntity);
             orderShirtRepository.save(newOrderShirtEntity);
+            orderEntity.setTotal(totalOrderEntity);
+
             orderRepository.save(orderEntity);
             return true;
         }catch (Exception e){

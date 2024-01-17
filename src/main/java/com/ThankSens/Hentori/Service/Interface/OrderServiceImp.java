@@ -12,10 +12,16 @@ import java.util.List;
 
 public interface OrderServiceImp {
     int createOrder(OrderRequest orderRequest);
-    List<OrderDto> getAllOrder();
+    List<OrderDto> getAllOrder(int pageNumber);
+    int getPageAll();
     OrderDto getDetailOrder(int id);
     boolean updateOrder(int order_id, OrderUpdateRequest orderUpdateRequest) throws ParseException;
-    List<OrderDto> getProcessingOrder();
-    List<OrderDto> getOrderByDate(String startDate, String endDate);
-    List<OrderDto> getDueOrder();
+    List<OrderDto> getProcessingOrder(int pageNumber);
+    int getPageProcessing();
+    List<OrderDto> getOrderByDate(String startDate, String endDate, int pageNumber);
+    int getPageDate(String start, String end);
+    List<OrderDto> getDueOrder(int PageNumber);
+    int getPageDue();
+    List<OrderDto> getCompleteOrder(int pageNumber);
+    int getPageComplete();
 }
