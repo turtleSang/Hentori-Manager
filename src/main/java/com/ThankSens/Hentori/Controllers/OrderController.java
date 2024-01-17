@@ -101,8 +101,7 @@ public class OrderController {
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 
-<<<<<<< HEAD
-=======
+
     @GetMapping("/due/page")
     public ResponseEntity<?> getPageDue(){
         int numberPage = orderServiceImp.getPageDue();
@@ -112,7 +111,6 @@ public class OrderController {
         responseData.setMessenger("OK");
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
->>>>>>> pagination
 
     @GetMapping("/processing")
     public ResponseEntity<?> getProcessingOrder(@RequestParam(defaultValue = "0") int pageNumber){
@@ -130,8 +128,6 @@ public class OrderController {
     }
 
     @GetMapping("/processing/page")
-
-
     public ResponseEntity<?> getPageProcessing(){
         int numberPage = orderServiceImp.getPageProcessing();
         ResponseData responseData = new ResponseData();

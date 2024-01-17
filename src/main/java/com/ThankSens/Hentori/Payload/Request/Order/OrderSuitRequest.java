@@ -6,7 +6,6 @@ public class OrderSuitRequest {
     private String kieuVeAo;
     private String kieuXe;
     private String lotAo;
-    private String kieuXe;
     private String kieuNut;
     private String kieuTui;
     private int price;

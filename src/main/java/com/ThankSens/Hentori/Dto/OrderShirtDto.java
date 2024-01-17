@@ -9,7 +9,6 @@ public class OrderShirtDto {
     private String fabric;
     private int total;
     private int price;
-    private int total;
     private int amount;
 
     public int getId() {
