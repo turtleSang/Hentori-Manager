@@ -147,9 +147,8 @@ public class ClientService implements ClientServiceImp {
                 ClientDto clientDto = modelMapper.map(clientEntity, ClientDto.class);
                 clientDtoList.add(clientDto);
             }
-            return clientDtoList;
         }
-        return null;
+        return clientDtoList;
     }
 
 
