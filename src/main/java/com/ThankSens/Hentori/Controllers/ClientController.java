@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @CrossOrigin("*")
@@ -44,6 +45,42 @@ public class ClientController {
             responseData.setMessenger("not found");
             return new ResponseEntity<>(responseData,HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/search/{name}")
+    public ResponseEntity<?> searchByName(@PathVariable String name){
+        List<String> listName = clientServiceImp.searchByName(name);
+        ResponseData responseData = new ResponseData();
+        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+        responseData.setCheck(false);
+        responseData.setMessenger("Not found");
+
+        if (listName.size() >0){
+            responseData.setMessenger("OK");
+            responseData.setObject(listName);
+            responseData.setCheck(true);
+            httpStatus = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<>(responseData, httpStatus);
+    }
+
+    @GetMapping("/find/{name}")
+    public ResponseEntity<?> findAllByName(@PathVariable String name){
+        List<ClientDto> clientDtoList = clientServiceImp.findAllByName(name);
+        ResponseData responseData = new ResponseData();
+        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+        responseData.setCheck(false);
+        responseData.setMessenger("Not found");
+
+        if (clientDtoList.size() >0){
+            responseData.setMessenger("OK");
+            responseData.setObject(clientDtoList);
+            responseData.setCheck(true);
+            httpStatus = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<>(responseData, httpStatus);
     }
 
     @PostMapping("/createclient")
