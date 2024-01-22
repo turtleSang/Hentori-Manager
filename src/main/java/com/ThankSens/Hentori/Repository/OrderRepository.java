@@ -1,5 +1,6 @@
 package com.ThankSens.Hentori.Repository;
 
+import com.ThankSens.Hentori.Entity.ClientEntity;
 import com.ThankSens.Hentori.Entity.OrderEntity;
 import com.ThankSens.Hentori.Entity.OrderStatusEntity;
 import org.springframework.data.domain.Page;
@@ -37,4 +38,10 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
     Page<OrderEntity> findAll(Pageable pageable);
 
     Page<OrderEntity> findByOrderStatusEntityEquals(OrderStatusEntity orderStatusEntity, Pageable pageable);
+
+    Page<OrderEntity> findAllByClientEntity(ClientEntity clientEntity, Pageable pageable);
+
+    Page<OrderEntity> findAllByClientEntityAndOrderStatusEntityIsNot(ClientEntity clientEntity, OrderStatusEntity orderStatusEntity, Pageable pageable);
+
+    Page<OrderEntity> findAllByClientEntityAndOrderStatusEntity(ClientEntity clientEntity, OrderStatusEntity orderStatusEntity, Pageable pageable);
 }

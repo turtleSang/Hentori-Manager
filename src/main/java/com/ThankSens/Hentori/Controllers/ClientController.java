@@ -3,10 +3,13 @@ package com.ThankSens.Hentori.Controllers;
 import com.ThankSens.Hentori.Dto.ClientDto;
 import com.ThankSens.Hentori.Dto.ClientSuitDto;
 import com.ThankSens.Hentori.Dto.ClientTrousersDto;
+import com.ThankSens.Hentori.Dto.OrderDto;
 import com.ThankSens.Hentori.Entity.ClientEntity;
 import com.ThankSens.Hentori.Payload.Request.ClientRequest;
 import com.ThankSens.Hentori.Payload.Response.ResponseData;
 import com.ThankSens.Hentori.Service.Interface.ClientServiceImp;
+import com.ThankSens.Hentori.Service.Interface.OrderServiceImp;
+import com.ThankSens.Hentori.Service.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,12 +25,14 @@ import java.util.UUID;
 public class ClientController {
 
     private ClientServiceImp clientServiceImp;
+    private OrderServiceImp orderServiceImp;
     private ModelMapper modelMapper;
 
     @Autowired
-    public ClientController(ClientServiceImp clientServiceImp, ModelMapper modelMapper) {
+    public ClientController(ClientServiceImp clientServiceImp, ModelMapper modelMapper, OrderServiceImp orderServiceImp) {
         this.modelMapper = modelMapper;
         this.clientServiceImp = clientServiceImp;
+        this.orderServiceImp = orderServiceImp;
     }
 
     @GetMapping("/getclient")
@@ -58,24 +63,6 @@ public class ClientController {
         if (listName.size() >0){
             responseData.setMessenger("OK");
             responseData.setObject(listName);
-            responseData.setCheck(true);
-            httpStatus = HttpStatus.OK;
-        }
-
-        return new ResponseEntity<>(responseData, httpStatus);
-    }
-
-    @GetMapping("/find/{name}")
-    public ResponseEntity<?> findAllByName(@PathVariable String name){
-        List<ClientDto> clientDtoList = clientServiceImp.findAllByName(name);
-        ResponseData responseData = new ResponseData();
-        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
-        responseData.setCheck(false);
-        responseData.setMessenger("Not found");
-
-        if (clientDtoList.size() >0){
-            responseData.setMessenger("OK");
-            responseData.setObject(clientDtoList);
             responseData.setCheck(true);
             httpStatus = HttpStatus.OK;
         }
@@ -123,5 +110,118 @@ public class ClientController {
             return new ResponseEntity<>(responseData, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/find/phone")
+    public ResponseEntity<?> findAllByPhoneNumber(@RequestParam String phoneNumber, @RequestParam(defaultValue = "0") int pageNumber){
+        List<ClientDto> clientDtoList = clientServiceImp.findAddByPhoneNumber(phoneNumber, pageNumber);
+        ResponseData responseData = new ResponseData();
+        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+        responseData.setCheck(false);
+        responseData.setMessenger("Not found");
+
+        if (clientDtoList.size() >0){
+            responseData.setMessenger("OK");
+            responseData.setObject(clientDtoList);
+            responseData.setCheck(true);
+            httpStatus = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<>(responseData, httpStatus);
+    }
+
+    @GetMapping("/find/name")
+    public ResponseEntity<?> findAllByName(@RequestParam String name, @RequestParam(defaultValue = "0") int pageNumber){
+        List<ClientDto> clientDtoList = clientServiceImp.findAllByName(name, pageNumber);
+        ResponseData responseData = new ResponseData();
+        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+        responseData.setCheck(false);
+        responseData.setMessenger("Not found");
+
+        if (clientDtoList.size() >0){
+            responseData.setMessenger("OK");
+            responseData.setObject(clientDtoList);
+            responseData.setCheck(true);
+            httpStatus = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<>(responseData, httpStatus);
+    }
+
+    @GetMapping("/order/processing")
+    public ResponseEntity<?> findAllProcessingOrderByClient(@RequestParam String phoneNumber, @RequestParam(defaultValue = "0") int pageNumber){
+        List<OrderDto> orderDtoList = orderServiceImp.findOrderProcessingByClient(phoneNumber, pageNumber);
+        ResponseData responseData = new ResponseData();
+        if (orderDtoList == null) {
+            responseData.setCheck(true);
+            responseData.setMessenger("Not Found");
+            return new ResponseEntity<>(responseData, HttpStatus.NOT_FOUND);
+        }
+        responseData.setCheck(true);
+        responseData.setMessenger("Ok");
+        responseData.setObject(orderDtoList);
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
+    @GetMapping("/order/processing/page")
+    public ResponseEntity<?> findAllProcessingOrderByClientPage(@RequestParam String phoneNumber){
+        int numberPage = orderServiceImp.findOrderProcessingPage(phoneNumber);
+        ResponseData responseData = new ResponseData();
+        responseData.setCheck(true);
+        responseData.setObject(numberPage);
+        responseData.setMessenger("OK");
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
+    @GetMapping("/order/complete")
+    public ResponseEntity<?> findAllCompleteOrderByClient(@RequestParam String phoneNumber, @RequestParam(defaultValue = "0") int pageNumber){
+        List<OrderDto> orderDtoList = orderServiceImp.findOrderCompleteByClient(phoneNumber, pageNumber);
+        ResponseData responseData = new ResponseData();
+        if (orderDtoList == null) {
+            responseData.setCheck(true);
+            responseData.setMessenger("Not Found");
+            return new ResponseEntity<>(responseData, HttpStatus.NOT_FOUND);
+        }
+        responseData.setCheck(true);
+        responseData.setMessenger("Ok");
+        responseData.setObject(orderDtoList);
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
+    @GetMapping("/order/complete/page")
+    public ResponseEntity<?> findAllCompleteOrderByClientPage(@RequestParam String phoneNumber){
+        int numberPage = orderServiceImp.findOrderCompletePage(phoneNumber);
+        ResponseData responseData = new ResponseData();
+        responseData.setCheck(true);
+        responseData.setObject(numberPage);
+        responseData.setMessenger("OK");
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
+    @GetMapping("/order/all")
+    public ResponseEntity<?> findAllOrderByClient(@RequestParam String phoneNumber, @RequestParam(defaultValue = "0") int pageNumber){
+        List<OrderDto> orderDtoList = orderServiceImp.findAllByClient(phoneNumber, pageNumber);
+        ResponseData responseData = new ResponseData();
+        if (orderDtoList == null) {
+            responseData.setCheck(true);
+            responseData.setMessenger("Not Found");
+            return new ResponseEntity<>(responseData, HttpStatus.NOT_FOUND);
+        }
+        responseData.setCheck(true);
+        responseData.setMessenger("Ok");
+        responseData.setObject(orderDtoList);
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
+    @GetMapping("/order/all/page")
+    public ResponseEntity<?> findAllOrderByClientPage(@RequestParam String phoneNumber){
+        int numberPage = orderServiceImp.findAllPage(phoneNumber);
+        ResponseData responseData = new ResponseData();
+        responseData.setCheck(true);
+        responseData.setObject(numberPage);
+        responseData.setMessenger("OK");
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
+
 
 }

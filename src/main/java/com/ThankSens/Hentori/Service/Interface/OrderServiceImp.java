@@ -24,4 +24,10 @@ public interface OrderServiceImp {
     int getPageDue();
     List<OrderDto> getCompleteOrder(int pageNumber);
     int getPageComplete();
+    List<OrderDto> findOrderProcessingByClient(String phoneNumber, int pageNumber);
+    int findOrderProcessingPage(String phoneNumber);
+    List<OrderDto> findOrderCompleteByClient(String phoneNumber, int pageNumber);
+    int findOrderCompletePage(String phoneNumber);
+    List<OrderDto> findAllByClient(String phoneNumber, int pageNumber);
+    int findAllPage(String phoneNumber);
 }

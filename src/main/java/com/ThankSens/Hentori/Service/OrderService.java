@@ -16,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -42,6 +43,8 @@ public class OrderService implements OrderServiceImp {
     private ModelMapper modelMapper;
     private ConvertToDate convertToDate;
     private final int pageSizeDefault = 5;
+    private final int pageNumberDefault =0;
+    private final int completeIdStatus = 3;
 
     @Autowired
     public OrderService(ClientRepository clientRepository,
@@ -269,7 +272,7 @@ public class OrderService implements OrderServiceImp {
 
     @Override
     public List<OrderDto> getCompleteOrder(int pageNumber) {
-        Optional<OrderStatusEntity> orderStatusEntityOptional = orderStatusRepository.findById(3);
+        Optional<OrderStatusEntity> orderStatusEntityOptional = orderStatusRepository.findById(completeIdStatus);
         if (!(orderStatusEntityOptional.isPresent())){
             return null;
         }
@@ -290,13 +293,107 @@ public class OrderService implements OrderServiceImp {
 
     @Override
     public int getPageComplete() {
-        Optional<OrderStatusEntity> orderStatusEntityOptional = orderStatusRepository.findById(3);
+        Optional<OrderStatusEntity> orderStatusEntityOptional = orderStatusRepository.findById(completeIdStatus);
         if (!(orderStatusEntityOptional.isPresent())){
             return 0;
         }
         PageRequest pageRequest = PageRequest.of(0, pageSizeDefault);
         Page<OrderEntity> orderEntityPage = orderRepository.findByOrderStatusEntityEquals(orderStatusEntityOptional.get(), pageRequest);
         return orderEntityPage.getTotalPages();
+    }
+
+    @Override
+    public List<OrderDto> findOrderProcessingByClient(String phoneNumber, int pageNumber) {
+        try {
+            ClientEntity clientEntity = clientRepository.findByPhoneNumber(phoneNumber);
+            Optional<OrderStatusEntity> orderStatusEntity = orderStatusRepository.findById(completeIdStatus);
+            PageRequest pageRequest = PageRequest.of(pageNumber, pageSizeDefault, Sort.by("createAt").descending());
+            Page<OrderEntity> orderEntityPage = orderRepository.findAllByClientEntityAndOrderStatusEntityIsNot(clientEntity,orderStatusEntity.get(),pageRequest);
+            List<OrderDto> orderDtoList = new ArrayList<>();
+            for (OrderEntity orderEntity: orderEntityPage
+            ) {
+                OrderDto orderDto = createOrderDtoFromOrderEntity(orderEntity);
+                orderDtoList.add(orderDto);
+            }
+            return orderDtoList;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public int findOrderProcessingPage(String phoneNumber) {
+        try {
+            ClientEntity clientEntity = clientRepository.findByPhoneNumber(phoneNumber);
+            Optional<OrderStatusEntity> orderStatusEntity = orderStatusRepository.findById(completeIdStatus);
+            PageRequest pageRequest = PageRequest.of(pageNumberDefault, pageSizeDefault);
+            Page<OrderEntity> orderEntityPage = orderRepository.findAllByClientEntityAndOrderStatusEntityIsNot(clientEntity,orderStatusEntity.get(),pageRequest);
+            return orderEntityPage.getTotalPages();
+        }catch (Exception e){
+            return 0;
+        }
+    }
+
+    @Override
+    public List<OrderDto> findOrderCompleteByClient(String phoneNumber, int pageNumber) {
+        try {
+            ClientEntity clientEntity = clientRepository.findByPhoneNumber(phoneNumber);
+            Optional<OrderStatusEntity> orderStatusEntity = orderStatusRepository.findById(completeIdStatus);
+            PageRequest pageRequest = PageRequest.of(pageNumber, pageSizeDefault, Sort.by("createAt").descending());
+            Page<OrderEntity> orderEntityPage = orderRepository.findAllByClientEntityAndOrderStatusEntity(clientEntity, orderStatusEntity.get(),pageRequest);
+            List<OrderDto> orderDtoList = new ArrayList<>();
+            for (OrderEntity orderEntity: orderEntityPage
+            ) {
+                OrderDto orderDto = createOrderDtoFromOrderEntity(orderEntity);
+                orderDtoList.add(orderDto);
+            }
+            return orderDtoList;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public int findOrderCompletePage(String phoneNumber) {
+        try {
+            ClientEntity clientEntity = clientRepository.findByPhoneNumber(phoneNumber);
+            Optional<OrderStatusEntity> orderStatusEntity = orderStatusRepository.findById(completeIdStatus);
+            PageRequest pageRequest = PageRequest.of(pageNumberDefault, pageSizeDefault);
+            Page<OrderEntity> orderEntityPage = orderRepository.findAllByClientEntityAndOrderStatusEntity(clientEntity,orderStatusEntity.get(),pageRequest);
+            return orderEntityPage.getTotalPages();
+        }catch (Exception e){
+            return 0;
+        }
+    }
+
+    @Override
+    public List<OrderDto> findAllByClient(String phoneNumber, int pageNumber) {
+        try {
+            ClientEntity clientEntity = clientRepository.findByPhoneNumber(phoneNumber);
+            PageRequest pageRequest = PageRequest.of(pageNumber, pageSizeDefault, Sort.by("createAt").descending());
+            Page<OrderEntity> orderEntityPage = orderRepository.findAllByClientEntity(clientEntity,pageRequest);
+            List<OrderDto> orderDtoList = new ArrayList<>();
+            for (OrderEntity orderEntity: orderEntityPage
+            ) {
+                OrderDto orderDto = createOrderDtoFromOrderEntity(orderEntity);
+                orderDtoList.add(orderDto);
+            }
+            return orderDtoList;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public int findAllPage(String phoneNumber) {
+        try {
+            ClientEntity clientEntity = clientRepository.findByPhoneNumber(phoneNumber);
+            PageRequest pageRequest = PageRequest.of(pageNumberDefault, pageSizeDefault);
+            Page<OrderEntity> orderEntityPage = orderRepository.findAllByClientEntity(clientEntity,pageRequest);
+            return orderEntityPage.getTotalPages();
+        }catch (Exception e){
+            return 0;
+        }
     }
 
 
