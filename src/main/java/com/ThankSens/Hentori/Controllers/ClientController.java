@@ -98,17 +98,26 @@ public class ClientController {
 
     @PutMapping("/update")
     public ResponseEntity<?> updateClient(@RequestBody ClientRequest clientRequest, @RequestParam UUID client_id){
-        boolean check = clientServiceImp.updateClient(clientRequest, client_id);
         ResponseData responseData = new ResponseData();
-        if (check){
-            responseData.setCheck(true);
-            responseData.setMessenger("updated");
-            return new ResponseEntity<>(responseData, HttpStatus.OK);
-        }else {
+        try {
+            boolean check = clientServiceImp.updateClient(clientRequest, client_id);
+
+            if (check){
+                responseData.setCheck(true);
+                responseData.setMessenger("updated");
+                return new ResponseEntity<>(responseData, HttpStatus.OK);
+            }else {
+                responseData.setCheck(false);
+                responseData.setMessenger("Can not update");
+                return new ResponseEntity<>(responseData, HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
             responseData.setCheck(false);
-            responseData.setMessenger("Can not update");
+            responseData.setMessenger("Phone number was using for other client");
             return new ResponseEntity<>(responseData, HttpStatus.BAD_REQUEST);
         }
+
     }
 
     @GetMapping("/find/phone")

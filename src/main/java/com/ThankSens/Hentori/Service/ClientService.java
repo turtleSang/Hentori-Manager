@@ -8,6 +8,7 @@ import com.ThankSens.Hentori.Entity.*;
 import com.ThankSens.Hentori.Payload.Request.ClientRequest;
 import com.ThankSens.Hentori.Repository.*;
 import com.ThankSens.Hentori.Service.Interface.ClientServiceImp;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -96,44 +97,44 @@ public class ClientService implements ClientServiceImp {
     }
 
     @Override
+    @Transactional
     public boolean updateClient(ClientRequest clientRequest, UUID client_id) {
-        Optional<ClientEntity> clientEntityOptional = clientRepository.findById(client_id);
-
-        if (clientEntityOptional.isPresent()){
-            ClientEntity clientEntity = clientEntityOptional.get();
-            if(clientRequest.getPhoneNumber() != null && clientRequest.getPhoneNumber() != clientEntity.getPhoneNumber()){
-                clientEntity.setPhoneNumber(clientRequest.getPhoneNumber());
-            };
-            if(clientRequest.getUsername() != null && clientRequest.getUsername() != clientEntity.getUsername()){
-                clientEntity.setPhoneNumber(clientRequest.getPhoneNumber());
-            }
-
-            if (clientRequest.getClientSuitRequest() != null){
-                Optional<ClientSuitEntity> clientSuitEntityOptional = clientSuitRepository.findById(client_id);
-                ClientSuitEntity clientSuitEntity = modelMapper.map(clientRequest.getClientSuitRequest(), ClientSuitEntity.class);
-                if (clientSuitEntityOptional.isPresent()){
-                    clientSuitEntity.setId(client_id);
-                }else{
-                    clientSuitEntity.setClientEntity(clientEntity);
+            Optional<ClientEntity> clientEntityOptional = clientRepository.findById(client_id);
+            if (clientEntityOptional.isPresent()){
+                ClientEntity clientEntity = clientEntityOptional.get();
+                if(clientRequest.getPhoneNumber() != null && clientRequest.getPhoneNumber() != clientEntity.getPhoneNumber()){
+                    clientEntity.setPhoneNumber(clientRequest.getPhoneNumber());
+                };
+                if(clientRequest.getUsername() != null && clientRequest.getUsername() != clientEntity.getUsername()){
+                    clientEntity.setPhoneNumber(clientRequest.getPhoneNumber());
                 }
-                 clientSuitRepository.save(clientSuitEntity);
+                if (clientRequest.getClientSuitRequest() != null){
+                    Optional<ClientSuitEntity> clientSuitEntityOptional = clientSuitRepository.findById(client_id);
+                    ClientSuitEntity clientSuitEntity = modelMapper.map(clientRequest.getClientSuitRequest(), ClientSuitEntity.class);
+                    if (clientSuitEntityOptional.isPresent()){
+                        clientSuitEntity.setId(client_id);
+                    }else{
+                        clientSuitEntity.setClientEntity(clientEntity);
+                    }
+                    clientSuitRepository.save(clientSuitEntity);
 
-            }
-            if (clientRequest.getClientTrousersRequest() != null){
-                Optional<ClientTrousersEntity> clientTrousersEntityOptional = clientTrousersRepository.findById(client_id);
-                ClientTrousersEntity clientTrousersEntity = modelMapper.map(clientRequest.getClientTrousersRequest(), ClientTrousersEntity.class);
-                if (clientTrousersEntityOptional.isPresent()){
-                    clientTrousersEntity.setId(client_id);
-                }else {
-                    clientTrousersEntity.setClientEntity(clientEntity);
                 }
-                clientTrousersRepository.save(clientTrousersEntity);
+                if (clientRequest.getClientTrousersRequest() != null){
+                    Optional<ClientTrousersEntity> clientTrousersEntityOptional = clientTrousersRepository.findById(client_id);
+                    ClientTrousersEntity clientTrousersEntity = modelMapper.map(clientRequest.getClientTrousersRequest(), ClientTrousersEntity.class);
+                    if (clientTrousersEntityOptional.isPresent()){
+                        clientTrousersEntity.setId(client_id);
+                    }else {
+                        clientTrousersEntity.setClientEntity(clientEntity);
+                    }
+                    clientTrousersRepository.save(clientTrousersEntity);
+                }
+                clientRepository.save(clientEntity);
+                return true;
+            }else {
+                return false;
             }
-            clientRepository.save(clientEntity);
-            return true;
-        }else {
-            return false;
-        }
+
     }
 
     @Override
