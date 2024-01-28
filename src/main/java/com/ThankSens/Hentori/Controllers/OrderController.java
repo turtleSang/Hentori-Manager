@@ -17,12 +17,9 @@ import java.util.List;
 @RequestMapping("/order")
 public class OrderController {
     private OrderServiceImp orderServiceImp;
-    private ModelMapper modelMapper;
-    private final int size = 6;
 
     public OrderController(OrderServiceImp orderServiceImp, ModelMapper modelMapper) {
         this.orderServiceImp = orderServiceImp;
-        this.modelMapper = modelMapper;
     }
 
     @PostMapping("/create")

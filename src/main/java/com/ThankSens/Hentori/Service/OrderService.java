@@ -9,7 +9,6 @@ import com.ThankSens.Hentori.Payload.Request.Order.OrderTrousersRequest;
 import com.ThankSens.Hentori.Payload.Request.OrderRequest;
 import com.ThankSens.Hentori.Payload.Request.OrderUpdateRequest;
 import com.ThankSens.Hentori.Repository.*;
-import com.ThankSens.Hentori.Service.Interface.KPIServiceImp;
 import com.ThankSens.Hentori.Service.Interface.OrderServiceImp;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -20,10 +19,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
-import java.awt.print.Pageable;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,8 +33,7 @@ public class OrderService implements OrderServiceImp {
     private OrderTrousersRepository orderTrousersRepository;
     private OrderAccessoryRepository orderAccessoryRepository;
     private OrderShirtRepository orderShirtRepository;
-    private KPIServiceImp kpiServiceImp;
-    private KPIRepository kpiRepository;
+
     private ModelMapper modelMapper;
     private ConvertToDate convertToDate;
     private final int pageSizeDefault = 5;
@@ -54,8 +48,6 @@ public class OrderService implements OrderServiceImp {
                         OrderTrousersRepository orderTrousersRepository,
                         OrderAccessoryRepository orderAccessoryRepository,
                         ModelMapper modelMapper, ConvertToDate convertToDate,
-                        KPIServiceImp kpiServiceImp,
-                        KPIRepository kpiRepository,
                         OrderShirtRepository orderShirtRepository) {
         this.clientRepository = clientRepository;
         this.orderRepository = orderRepository;
@@ -66,8 +58,7 @@ public class OrderService implements OrderServiceImp {
         this.orderShirtRepository = orderShirtRepository;
         this.modelMapper = modelMapper;
         this.convertToDate = convertToDate;
-        this.kpiServiceImp = kpiServiceImp;
-        this.kpiRepository = kpiRepository;
+
     }
 
     @Override
@@ -110,8 +101,6 @@ public class OrderService implements OrderServiceImp {
                 if (orderShirtRequestList != null) {
                     addListShirt(orderShirtRequestList, orderEntity);
                 }
-                //Update Kpi
-                updateKPIAddOrder(orderEntity);
                 return orderEntity.getId();
             } else {
                 return 0;
@@ -597,19 +586,5 @@ public class OrderService implements OrderServiceImp {
 
     }
 
-    //update KPI
-    private void updateKPIAddOrder(OrderEntity orderEntity) throws Exception {
 
-        Date createAt = orderEntity.getCreateAt();
-        Instant instant = createAt.toInstant();
-        ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
-        int year = zonedDateTime.getYear();
-        int month = zonedDateTime.getMonthValue();
-        KPIEntity kpiEntity = kpiServiceImp.getKPI(year, month);
-        if (kpiEntity == null) {
-            kpiEntity = kpiServiceImp.createKPI(year, month, 0);
-        }
-        kpiEntity.setComplete(kpiEntity.getComplete() + orderEntity.getTotal());
-        kpiRepository.save(kpiEntity);
-    }
 }

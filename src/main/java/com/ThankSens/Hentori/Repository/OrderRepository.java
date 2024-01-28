@@ -44,4 +44,9 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
     Page<OrderEntity> findAllByClientEntityAndOrderStatusEntityIsNot(ClientEntity clientEntity, OrderStatusEntity orderStatusEntity, Pageable pageable);
 
     Page<OrderEntity> findAllByClientEntityAndOrderStatusEntity(ClientEntity clientEntity, OrderStatusEntity orderStatusEntity, Pageable pageable);
+
+    @Query(
+            value = "SELECT * FROM hentori.orders WHERE hentori.orders.create_at > ?1 AND hentori.orders.create_at < ?2",
+            nativeQuery = true)
+    List<OrderEntity> findAllByDate(Date startDate, Date endDate);
 }
