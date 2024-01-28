@@ -4,17 +4,12 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "order_trousers")
-public class OrderTrousersEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+public class OrderTrousersEntity extends OrderItemEntity {
     @Column
     private String formQuan;
 
     @Column
     private String kieuLung;
-
 
     @Column
     private String kieuTuiTruoc;
@@ -30,30 +25,6 @@ public class OrderTrousersEntity {
 
     @Column(length = 10)
     private String fabric;
-
-    @Column
-    private int price;
-
-    @Column
-    private int amount;
-
-    @Column(length = 1000)
-    private String note;
-
-    @Column
-    private int total;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private OrderEntity orderEntity;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getFormQuan() {
         return formQuan;
@@ -101,46 +72,6 @@ public class OrderTrousersEntity {
 
     public void setKieuLai(String kieuLai) {
         this.kieuLai = kieuLai;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
-
-    public OrderEntity getOrderEntity() {
-        return orderEntity;
-    }
-
-    public void setOrderEntity(OrderEntity orderEntity) {
-        this.orderEntity = orderEntity;
     }
 
     public String getFabric() {

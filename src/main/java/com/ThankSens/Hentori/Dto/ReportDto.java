@@ -1,22 +1,38 @@
 package com.ThankSens.Hentori.Dto;
 
 public class ReportDto {
-    private int total;
+    private double total;
     private int amount;
-    private int shirtTotal;
+    private double shirtTotal;
     private int shirtAmount;
-    private int suitTotal;
+    private double suitTotal;
     private int suitAmount;
-    private int trousersTotal;
+    private double trousersTotal;
     private int trousersAmount;
-    private int accessoryTotal;
+    private double accessoryTotal;
     private int accessoryAmount;
 
-    public int getTotal() {
+    public ReportDto() {
+    }
+
+    public ReportDto(double total, int amount, double shirtTotal, int shirtAmount, double suitTotal, int suitAmount, double trousersTotal, int trousersAmount, double accessoryTotal, int accessoryAmount) {
+        this.total = total;
+        this.amount = amount;
+        this.shirtTotal = shirtTotal;
+        this.shirtAmount = shirtAmount;
+        this.suitTotal = suitTotal;
+        this.suitAmount = suitAmount;
+        this.trousersTotal = trousersTotal;
+        this.trousersAmount = trousersAmount;
+        this.accessoryTotal = accessoryTotal;
+        this.accessoryAmount = accessoryAmount;
+    }
+
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 
@@ -28,11 +44,11 @@ public class ReportDto {
         this.amount = amount;
     }
 
-    public int getShirtTotal() {
+    public double getShirtTotal() {
         return shirtTotal;
     }
 
-    public void setShirtTotal(int shirtTotal) {
+    public void setShirtTotal(double shirtTotal) {
         this.shirtTotal = shirtTotal;
     }
 
@@ -44,11 +60,11 @@ public class ReportDto {
         this.shirtAmount = shirtAmount;
     }
 
-    public int getSuitTotal() {
+    public double getSuitTotal() {
         return suitTotal;
     }
 
-    public void setSuitTotal(int suitTotal) {
+    public void setSuitTotal(double suitTotal) {
         this.suitTotal = suitTotal;
     }
 
@@ -60,11 +76,11 @@ public class ReportDto {
         this.suitAmount = suitAmount;
     }
 
-    public int getTrousersTotal() {
+    public double getTrousersTotal() {
         return trousersTotal;
     }
 
-    public void setTrousersTotal(int trousersTotal) {
+    public void setTrousersTotal(double trousersTotal) {
         this.trousersTotal = trousersTotal;
     }
 
@@ -76,11 +92,11 @@ public class ReportDto {
         this.trousersAmount = trousersAmount;
     }
 
-    public int getAccessoryTotal() {
+    public double getAccessoryTotal() {
         return accessoryTotal;
     }
 
-    public void setAccessoryTotal(int accessoryTotal) {
+    public void setAccessoryTotal(double accessoryTotal) {
         this.accessoryTotal = accessoryTotal;
     }
 

@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "order_suit")
-public class OrderSuitEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class OrderSuitEntity extends OrderItemEntity {
 
     @Column
     private String kieuAo;
@@ -30,32 +27,8 @@ public class OrderSuitEntity {
     @Column
     private String kieuTui;
 
-    @Column
-    private int price;
-
-    @Column
-    private int amount;
-
-    @Column
-    private int total;
-
     @Column(length = 10)
     private String fabric;
-
-    @Column(length = 1000)
-    private String note;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private OrderEntity orderEntity;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getKieuAo() {
         return kieuAo;
@@ -79,6 +52,14 @@ public class OrderSuitEntity {
 
     public void setKieuVeAo(String kieuVeAo) {
         this.kieuVeAo = kieuVeAo;
+    }
+
+    public String getKieuXe() {
+        return kieuXe;
+    }
+
+    public void setKieuXe(String kieuXe) {
+        this.kieuXe = kieuXe;
     }
 
     public String getLotAo() {
@@ -105,59 +86,11 @@ public class OrderSuitEntity {
         this.kieuTui = kieuTui;
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public OrderEntity getOrderEntity() {
-        return orderEntity;
-    }
-
-    public void setOrderEntity(OrderEntity orderEntity) {
-        this.orderEntity = orderEntity;
-    }
-
     public String getFabric() {
         return fabric;
     }
 
     public void setFabric(String fabric) {
         this.fabric = fabric;
-    }
-
-    public String getKieuXe() {
-        return kieuXe;
-    }
-
-    public void setKieuXe(String kieuXe) {
-        this.kieuXe = kieuXe;
     }
 }
