@@ -2,13 +2,15 @@ package com.ThankSens.Hentori.Service;
 
 import com.ThankSens.Hentori.Dto.ReportDto;
 import com.ThankSens.Hentori.Entity.*;
+import com.ThankSens.Hentori.Entity.Keys.KPIId;
+import com.ThankSens.Hentori.Repository.KPIRepository;
 import com.ThankSens.Hentori.Repository.OrderRepository;
 import com.ThankSens.Hentori.Service.Interface.ReportServiceImp;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,17 +18,25 @@ import java.util.List;
 public class ReportService implements ReportServiceImp {
     private OrderRepository orderRepository;
     private ModelMapper modelMapper;
+    private KPIRepository kpiRepository;
 
-    public ReportService(OrderRepository orderRepository, ModelMapper modelMapper) {
+    public ReportService(OrderRepository orderRepository, ModelMapper modelMapper, KPIRepository kpiRepository) {
         this.orderRepository = orderRepository;
         this.modelMapper = modelMapper;
+        this.kpiRepository = kpiRepository;
     }
 
     @Override
     public ReportDto reportOrderByMonth(int month, int year) {
-        if (month < 1 || month > 12 || year < 1000 || year > 9999) {
+//        Search KPI
+        List<KPIId> kpiIdList = new ArrayList<>();
+        KPIId kpiId = new KPIId(month, year);
+        if (kpiId == null) {
             return null;
         }
+        kpiIdList.add(kpiId);
+        List<KPIEntity> kpiEntity = kpiRepository.findAllById(kpiIdList);
+//        Query Order
         LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
         Date startDate = java.sql.Date.valueOf(firstDayOfMonth);
         LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
@@ -35,7 +45,7 @@ public class ReportService implements ReportServiceImp {
         if (orderEntityList.isEmpty()) {
             return null;
         }
-        ReportDto reportDto = reportOrderFormOrderEntity(orderEntityList);
+        ReportDto reportDto = reportOrderFormOrderEntity(orderEntityList, kpiEntity);
 
         return reportDto;
     }
@@ -45,7 +55,7 @@ public class ReportService implements ReportServiceImp {
         if (quarter < 1 || quarter > 4 || year < 1000 || year > 9999) {
             return null;
         }
-        int startMonth = 0;
+        int startMonth;
         int endMonth;
         switch (quarter) {
             case 1:
@@ -65,6 +75,14 @@ public class ReportService implements ReportServiceImp {
                 endMonth = 12;
                 break;
         }
+//        Search KPI
+        List<KPIId> kpiIdList = new ArrayList<>();
+        for (int i = startMonth; i <= endMonth; i++){
+            KPIId id = new KPIId(i,year);
+            kpiIdList.add(id);
+        }
+        List<KPIEntity> kpiEntityList = kpiRepository.findAllById(kpiIdList);
+
 //        find start date
         LocalDate firstDayOfQuarter = LocalDate.of(year, startMonth, 1);
         Date startDate = java.sql.Date.valueOf(firstDayOfQuarter);
@@ -76,11 +94,11 @@ public class ReportService implements ReportServiceImp {
         if (orderEntityList.isEmpty()) {
             return null;
         }
-        ReportDto reportDto = reportOrderFormOrderEntity(orderEntityList);
+        ReportDto reportDto = reportOrderFormOrderEntity(orderEntityList, kpiEntityList);
         return reportDto;
     }
 
-    private ReportDto reportOrderFormOrderEntity(List<OrderEntity> orderEntityList) {
+    private ReportDto reportOrderFormOrderEntity(List<OrderEntity> orderEntityList, List<KPIEntity> kpiEntityList) {
         double total = 0;
         int amount = orderEntityList.size();
         double shirtTotal = 0;
@@ -91,6 +109,7 @@ public class ReportService implements ReportServiceImp {
         int suitAmount = 0;
         double accessoryTotal = 0;
         int accessoryAmount = 0;
+        double target = 0;
         for (OrderEntity orderEntity : orderEntityList
         ) {
             total += orderEntity.getTotal();
@@ -116,9 +135,13 @@ public class ReportService implements ReportServiceImp {
             }
         }
 
-        ReportDto reportDto = new ReportDto(total, amount, shirtTotal, shirtAmount, suitTotal, suitAmount, trouserTotal, trousersAmount, accessoryTotal, accessoryAmount);
-
-
+        if (kpiEntityList.size() > 0) {
+            for (KPIEntity kpiEntity : kpiEntityList
+            ) {
+                target += kpiEntity.getTarget();
+            }
+        }
+        ReportDto reportDto = new ReportDto(total, amount, shirtTotal, shirtAmount, suitTotal, suitAmount, trouserTotal, trousersAmount, accessoryTotal, accessoryAmount, target);
         return reportDto;
     }
 

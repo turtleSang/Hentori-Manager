@@ -11,11 +11,12 @@ public class ReportDto {
     private int trousersAmount;
     private double accessoryTotal;
     private int accessoryAmount;
+    private double target;
 
     public ReportDto() {
     }
 
-    public ReportDto(double total, int amount, double shirtTotal, int shirtAmount, double suitTotal, int suitAmount, double trousersTotal, int trousersAmount, double accessoryTotal, int accessoryAmount) {
+    public ReportDto(double total, int amount, double shirtTotal, int shirtAmount, double suitTotal, int suitAmount, double trousersTotal, int trousersAmount, double accessoryTotal, int accessoryAmount, double target) {
         this.total = total;
         this.amount = amount;
         this.shirtTotal = shirtTotal;
@@ -26,6 +27,7 @@ public class ReportDto {
         this.trousersAmount = trousersAmount;
         this.accessoryTotal = accessoryTotal;
         this.accessoryAmount = accessoryAmount;
+        this.target = target;
     }
 
     public double getTotal() {
@@ -106,5 +108,13 @@ public class ReportDto {
 
     public void setAccessoryAmount(int accessoryAmount) {
         this.accessoryAmount = accessoryAmount;
+    }
+
+    public double getTarget() {
+        return target;
+    }
+
+    public void setTarget(double target) {
+        this.target = target;
     }
 }

@@ -9,13 +9,12 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.time.LocalDate;
+import java.util.Date;
 
 
 @Component
-public class
-
-
-JjwtHelper {
+public class JjwtHelper {
     private String txtPrivate = "dGhhbmhzYW5nOTdxdWFkZXB0cmFpdmFub2l0aWVuZ3RoYXRsYW5nYXVkZXQ";
 
     public String createJwt(String json){

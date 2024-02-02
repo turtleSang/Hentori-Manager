@@ -9,6 +9,9 @@ public class KPIId implements Serializable {
     private int year;
 
     public KPIId(int month, int year) {
+        if (month > 12 || month < 1 || year < 1900){
+            return;
+        }
         this.month = month;
         this.year = year;
     }
@@ -22,6 +25,9 @@ public class KPIId implements Serializable {
     }
 
     public void setMonth(int month) {
+        if (month > 12 || month < 1 ){
+            return;
+        }
         this.month = month;
     }
 
@@ -30,6 +36,9 @@ public class KPIId implements Serializable {
     }
 
     public void setYear(int year) {
+        if (year < 1900){
+            return;
+        }
         this.year = year;
     }
 }

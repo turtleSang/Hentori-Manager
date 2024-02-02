@@ -1,27 +1,31 @@
 package com.ThankSens.Hentori.Entity;
 
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Id;
+import com.ThankSens.Hentori.Entity.Keys.KPIId;
+import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Value;
 
+@Entity
+@Table(name = "kpi")
 public class KPIEntity {
     @EmbeddedId
-    private KPIEntity kpiEntity;
+    private KPIId id;
 
-    private int KPI;
+    @Column(name = "target")
+    private double target;
 
-    public KPIEntity getKpiEntity() {
-        return kpiEntity;
+    public KPIId getId() {
+        return id;
     }
 
-    public void setKpiEntity(KPIEntity kpiEntity) {
-        this.kpiEntity = kpiEntity;
+    public void setId(KPIId id) {
+        this.id = id;
     }
 
-    public int getKPI() {
-        return KPI;
+    public double getTarget() {
+        return target;
     }
 
-    public void setKPI(int KPI) {
-        this.KPI = KPI;
+    public void setTarget(double target) {
+        this.target = target;
     }
 }
