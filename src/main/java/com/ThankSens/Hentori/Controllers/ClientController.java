@@ -146,7 +146,7 @@ public class ClientController {
         responseData.setCheck(false);
         responseData.setMessenger("Not found");
 
-        if (clientDtoList.size() >0){
+        if (clientDtoList ==null){
             responseData.setMessenger("OK");
             responseData.setObject(clientDtoList);
             responseData.setCheck(true);
