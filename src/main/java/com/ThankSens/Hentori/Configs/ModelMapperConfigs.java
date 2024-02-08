@@ -12,7 +12,7 @@ public class ModelMapperConfigs {
     public ModelMapper modelMapper(){
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.STANDARD)
+                .setMatchingStrategy(MatchingStrategies.STRICT)
                 .setSkipNullEnabled(true);
         return modelMapper;
     }

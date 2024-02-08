@@ -1,5 +1,8 @@
 package com.ThankSens.Hentori.Dto;
 
+import org.apache.juli.logging.Log;
+
+import java.util.List;
 import java.util.UUID;
 
 public class ClientDto {
@@ -14,13 +17,7 @@ public class ClientDto {
 
     private ClientTrousersDto clientTrousersDto;
 
-    public ClientDto(UUID id, String username, String phoneNumber, ClientSuitDto clientSuitDto, ClientTrousersDto clientTrousersDto) {
-        this.id = id;
-        this.username = username;
-        this.phoneNumber = phoneNumber;
-        this.clientSuitDto = clientSuitDto;
-        this.clientTrousersDto = clientTrousersDto;
-    }
+    private List<LogBookDto> logBookDtoList;
 
     public ClientDto() {
     }
@@ -63,5 +60,13 @@ public class ClientDto {
 
     public void setClientTrousersDto(ClientTrousersDto clientTrousersDto) {
         this.clientTrousersDto = clientTrousersDto;
+    }
+
+    public List<LogBookDto> getLogBookDtoList() {
+        return logBookDtoList;
+    }
+
+    public void setLogBookDtoList(List<LogBookDto> logBookDtoList) {
+        this.logBookDtoList = logBookDtoList;
     }
 }

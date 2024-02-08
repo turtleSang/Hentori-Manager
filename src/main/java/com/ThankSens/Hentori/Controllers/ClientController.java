@@ -37,7 +37,6 @@ public class ClientController {
 
     @GetMapping("/getclient")
     public ResponseEntity<?> findClientByPhone(@RequestParam String phoneNumber){
-
         ClientDto clientDto = clientServiceImp.findClientByPhone(phoneNumber);
         ResponseData responseData = new ResponseData();
         if (clientDto != null){
@@ -146,13 +145,12 @@ public class ClientController {
         responseData.setCheck(false);
         responseData.setMessenger("Not found");
 
-        if (clientDtoList ==null){
+        if (clientDtoList != null){
             responseData.setMessenger("OK");
-            responseData.setObject(clientDtoList);
             responseData.setCheck(true);
             httpStatus = HttpStatus.OK;
         }
-
+        responseData.setObject(clientDtoList);
         return new ResponseEntity<>(responseData, httpStatus);
     }
 

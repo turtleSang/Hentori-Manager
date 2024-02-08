@@ -32,6 +32,9 @@ public class ClientEntity {
     @PrimaryKeyJoinColumn
     private ClientTrousersEntity clientTrousersEntity;
 
+    @OneToMany(mappedBy = "clientEntity")
+    private List<LogBookEntity> logBookEntity;
+
     public UUID getId() {
         return id;
     }
@@ -86,5 +89,13 @@ public class ClientEntity {
 
     public void setTotalMoney(long totalMoney) {
         this.totalMoney = totalMoney;
+    }
+
+    public List<LogBookEntity> getLogBookEntity() {
+        return logBookEntity;
+    }
+
+    public void setLogBookEntity(List<LogBookEntity> logBookEntity) {
+        this.logBookEntity = logBookEntity;
     }
 }
