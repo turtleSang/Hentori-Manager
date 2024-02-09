@@ -65,4 +65,21 @@ public class LogBookController {
         HttpStatus httpStatus = HttpStatus.OK;
         return new ResponseEntity<>(responseData, httpStatus);
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteLogbook(@RequestParam int id){
+        boolean check = logBookServiceImp.deleteLogBook(id);
+        ResponseData responseData = new ResponseData();
+        responseData.setCheck(check);
+        HttpStatus httpStatus;
+        if (check){
+            responseData.setMessenger("Deleted");
+            httpStatus = HttpStatus.OK;
+        }else {
+            responseData.setMessenger("Can't Delete");
+            httpStatus = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(responseData,httpStatus);
+
+    }
 }

@@ -11,4 +11,5 @@ public interface LogBookServiceImp {
     boolean createLogBook(LogBookRequest logBookRequest);
     List<LogBookDto> getAllLogBookByPhoneNumber(String phoneNumber, int pageNumber);
     int getAllPageLogBook(String phoneNumber);
+    boolean deleteLogBook(int idLogBook);
 }

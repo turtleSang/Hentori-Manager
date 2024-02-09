@@ -7,7 +7,6 @@ import com.ThankSens.Hentori.Payload.Request.Client.LogBookRequest;
 import com.ThankSens.Hentori.Repository.ClientRepository;
 import com.ThankSens.Hentori.Repository.LogBookRepository;
 import com.ThankSens.Hentori.Service.Interface.LogBookServiceImp;
-import jakarta.annotation.Nullable;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.util.*;
 
 @Service
@@ -83,6 +81,12 @@ public class LogBookService implements LogBookServiceImp {
         PageRequest pageRequest = PageRequest.of(0, pageSizeDefault);
         Page<LogBookEntity> logBookEntityPage= logBookRepository.findAllByClientEntity(clientEntity, pageRequest);
         return logBookEntityPage.getTotalPages();
+    }
+
+    @Override
+    public boolean deleteLogBook(int idLogBook) {
+        logBookRepository.deleteById(idLogBook);
+        return true;
     }
 
     private LogBookDto transferLogBookEntityToDto(LogBookEntity logBookEntities){
