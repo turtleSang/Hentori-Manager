@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    propertie:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  datasource:
+    url: jdbc:mysql://localhost:3307/hentori
+    username: root
+    password: admin123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+logging:
+  level:
+    root: INFO

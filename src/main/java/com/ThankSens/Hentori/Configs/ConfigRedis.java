@@ -5,6 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+
+import java.util.Properties;
 
 @Configuration
 public class ConfigRedis {
@@ -19,4 +23,6 @@ public class ConfigRedis {
         template.setConnectionFactory(lettuceConnectionFactory);
         return template;
     }
+
+
 }

@@ -1,9 +1,26 @@
-package com.ThankSens.Hentori.Payload.Request;
+package com.ThankSens.Hentori.Entity;
 
-public class AdminRequest {
+import jakarta.persistence.*;
+
+import java.util.Date;
+
+
+@Entity
+public class WaitingAdminEntity {
+
+    @Id
     private String username;
+
+    @Column
     private String password;
+
+    @Column
+    private Date timeDelete;
+
+    @Column
     private int otp;
+
+
 
     public String getUsername() {
         return username;
@@ -19,6 +36,14 @@ public class AdminRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Date getTimeDelete() {
+        return timeDelete;
+    }
+
+    public void setTimeDelete(Date timeDelete) {
+        this.timeDelete = timeDelete;
     }
 
     public int getOtp() {
