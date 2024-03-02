@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/client")
 public class ClientController {
@@ -34,7 +33,6 @@ public class ClientController {
         this.clientServiceImp = clientServiceImp;
         this.orderServiceImp = orderServiceImp;
     }
-
     @GetMapping("/getclient")
     public ResponseEntity<?> findClientByPhone(@RequestParam String phoneNumber){
         ClientDto clientDto = clientServiceImp.findClientByPhone(phoneNumber);

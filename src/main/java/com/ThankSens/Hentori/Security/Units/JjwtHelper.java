@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 
@@ -20,7 +22,9 @@ public class JjwtHelper {
     public String createJwt(String json){
         byte[] bytes = Decoders.BASE64URL.decode(txtPrivate);
         SecretKey key = Keys.hmacShaKeyFor(bytes);
-        String jwt = Jwts.builder().subject(json).signWith(key).compact();
+        LocalDateTime expireDate = LocalDateTime.now().plusHours(2);
+        Date expire = Date.from(expireDate.atZone(ZoneId.systemDefault()).toInstant());
+        String jwt = Jwts.builder().subject(json).signWith(key).expiration(expire).compact();
         return jwt;
     }
 
