@@ -10,20 +10,57 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReportService implements ReportServiceImp {
     private OrderRepository orderRepository;
     private ModelMapper modelMapper;
     private KPIRepository kpiRepository;
+    private ConvertToDate convertToDate;
 
-    public ReportService(OrderRepository orderRepository, ModelMapper modelMapper, KPIRepository kpiRepository) {
+    public ReportService(OrderRepository orderRepository, ModelMapper modelMapper, KPIRepository kpiRepository, ConvertToDate convertToDate) {
         this.orderRepository = orderRepository;
         this.modelMapper = modelMapper;
         this.kpiRepository = kpiRepository;
+        this.convertToDate = convertToDate;
+    }
+
+    @Override
+    public ReportDto reportOrderByDate(String dateSearch) {
+        try {
+            Date date = convertToDate.convertDate(dateSearch);
+            ZonedDateTime zonedDateTime = date.toInstant().atZone(ZoneId.systemDefault());
+            int month = zonedDateTime.getMonthValue();
+            int year = zonedDateTime.getYear();
+            LocalDate localDateFirstDay = LocalDate.of(year, month, 1);
+            int lengthOfMonth = localDateFirstDay.lengthOfMonth();
+//            search KPI
+            KPIId kpiId = new KPIId(month, year);
+            Optional<KPIEntity> kpiEntityOptional = kpiRepository.findById(kpiId);
+            ArrayList<KPIEntity> kpiEntityList = new ArrayList<>();
+            if (kpiEntityOptional.isPresent()){
+                KPIEntity kpiEntity = kpiEntityOptional.get();
+                kpiEntity.setTarget(kpiEntity.getTarget()/lengthOfMonth);
+                kpiEntityList.add(kpiEntityOptional.get());
+            }
+
+            ZonedDateTime zonedDateTimeNext = date.toInstant().atZone(ZoneId.systemDefault()).plusDays(1);
+            Date dateNext = Date.from(zonedDateTimeNext.toInstant());
+            List<OrderEntity> orderEntityList = orderRepository.findAllByDate(date, dateNext);
+            ReportDto reportDto = reportOrderFormOrderEntity(orderEntityList, kpiEntityList);
+            return reportDto;
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+
     }
 
     @Override

@@ -57,4 +57,23 @@ public class ReportController {
         }
         return new ResponseEntity<>(responseData,httpStatus);
     }
+
+    @GetMapping("/day")
+    public ResponseEntity<?> reportByDay(@RequestParam String day){
+        ReportDto reportDto = reportServiceImp.reportOrderByDate(day);
+        ResponseData responseData = new ResponseData();
+        HttpStatus httpStatus;
+        if(reportDto == null){
+            responseData.setCheck(false);
+            responseData.setMessenger("not found");
+            httpStatus = HttpStatus.NOT_FOUND;
+        }else {
+            responseData.setObject(reportDto);
+            responseData.setCheck(true);
+            responseData.setMessenger("OK");
+            httpStatus = HttpStatus.OK;
+        }
+        return new ResponseEntity<>(responseData,httpStatus);
+    }
+
 }

@@ -19,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -199,6 +200,7 @@ public class OrderService implements OrderServiceImp {
             PageRequest pageRequest = PageRequest.of(pageNumber, pageSizeDefault);
             Date startDate = convertToDate.convertDate(start);
             Date endDate = convertToDate.convertDate(end);
+            endDate = Date.from(endDate.toInstant().atZone(ZoneId.systemDefault()).plusDays(1).toInstant());
             Page<OrderEntity> orderEntityList = orderRepository.findOrderByDate(startDate, endDate, pageRequest);
             List<OrderDto> orderDtoList = new ArrayList<>();
             if (orderEntityList.isEmpty()){
@@ -222,6 +224,7 @@ public class OrderService implements OrderServiceImp {
             PageRequest pageRequest = PageRequest.of(0, pageSizeDefault);
             Date startDate = convertToDate.convertDate(start);
             Date endDate = convertToDate.convertDate(end);
+            endDate = Date.from(endDate.toInstant().atZone(ZoneId.systemDefault()).plusDays(1).toInstant());
             Page<OrderEntity> orderEntityList = orderRepository.findOrderByDate(startDate, endDate, pageRequest);
             if (orderEntityList.isEmpty()){
                 return 0;
