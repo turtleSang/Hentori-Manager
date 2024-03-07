@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/client")
+@RequestMapping("/api/client")
 public class ClientController {
 
     private ClientServiceImp clientServiceImp;

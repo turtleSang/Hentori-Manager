@@ -17,11 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 
 
 @EnableWebSecurity
@@ -41,9 +37,9 @@ public class ConfigsSecurity  {
                 .csrf((csrf) -> csrf.disable())
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/admin/**").permitAll()
-                        .requestMatchers("/*").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/api/admin/**").permitAll()
+                        .requestMatchers("/api/**").authenticated()
+                        .anyRequest().permitAll()
                 ).addFilterBefore(customJwtFilter,  AuthorizationFilter.class);
         return http.build();
     }

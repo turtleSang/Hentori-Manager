@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/report")
+@RequestMapping("/api/report")
 public class ReportController {
     private ReportServiceImp reportServiceImp;
 

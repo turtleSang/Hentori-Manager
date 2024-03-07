@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/logbook")
+@RequestMapping("/api/logbook")
 public class LogBookController {
     private LogBookServiceImp logBookServiceImp;
 

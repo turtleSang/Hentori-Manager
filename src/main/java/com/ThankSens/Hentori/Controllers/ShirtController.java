@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/shirt")
+@RequestMapping("/api/shirt")
 public class ShirtController {
     private OrderShirtServiceImp orderShirtServiceImp;
 
