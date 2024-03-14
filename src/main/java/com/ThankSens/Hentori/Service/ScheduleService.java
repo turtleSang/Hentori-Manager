@@ -23,7 +23,6 @@ public class ScheduleService {
         if (waitingAdminEntityList != null){
             for (WaitingAdminEntity waitingAdminEntity: waitingAdminEntityList
                  ) {
-                System.out.println("Delete waiting waiting users " + waitingAdminEntity.getUsername());
                 waitingAdminRepository.delete(waitingAdminEntity);
             }
         }
