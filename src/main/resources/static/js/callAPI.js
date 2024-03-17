@@ -1,4 +1,5 @@
-const rootUrl = "http://localhost:8080/api";
+let originUrl = window.location.origin
+const rootUrl = `${originUrl}/api`;
 let token = localStorage.getItem("token");
 let headers = { token };
 

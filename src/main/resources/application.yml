@@ -7,11 +7,11 @@ spring:
 spring:
   profiles:
     default: production
-    include: common
+    include: common, production
 ---
 spring:
   profiles:
-    active: local
+    active: production
 
 
 

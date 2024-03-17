@@ -3,6 +3,3 @@ spring:
     url: jdbc:mysql://localhost:3307/hentori
     username: root
     password: admin123
-logging:
-  level:
-    root: warn
