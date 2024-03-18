@@ -1,18 +1,15 @@
----
 spring:
-  profiles:
-    default: local
-    include: common, local
----
-spring:
-  profiles:
-    default: production
-    include: common, production
----
-spring:
-  profiles:
-    active: production
-
+  jpa:
+    hibernate:
+      ddl-auto: update
+    propertie:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_DATABASE_URL:192.168.1.4}:${MYSQL_PORT:3307}/hentori
+    username: root
+    password: ${MYSQL_ROOT_PASSWORD:admin123}
 
 
 
