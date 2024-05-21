@@ -1,0 +1,54 @@
+19-03-2024  WARN 11304 org.hibernate.mapping.RootClass: HHH000038: Composite-id class does not override equals(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 11304 org.hibernate.mapping.RootClass: HHH000039: Composite-id class does not override hashCode(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 11304 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning  
+19-03-2024  WARN 18492 org.hibernate.mapping.RootClass: HHH000038: Composite-id class does not override equals(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 18492 org.hibernate.mapping.RootClass: HHH000039: Composite-id class does not override hashCode(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 18492 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning  
+19-03-2024  WARN 21684 org.hibernate.mapping.RootClass: HHH000038: Composite-id class does not override equals(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 21684 org.hibernate.mapping.RootClass: HHH000039: Composite-id class does not override hashCode(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 21684 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning  
+19-03-2024  WARN 28284 org.hibernate.mapping.RootClass: HHH000038: Composite-id class does not override equals(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 28284 org.hibernate.mapping.RootClass: HHH000039: Composite-id class does not override hashCode(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 28284 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning  
+19-03-2024  WARN 38480 org.hibernate.mapping.RootClass: HHH000038: Composite-id class does not override equals(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 38480 org.hibernate.mapping.RootClass: HHH000039: Composite-id class does not override hashCode(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 38480 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning  
+19-03-2024  WARN 38644 org.hibernate.mapping.RootClass: HHH000038: Composite-id class does not override equals(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 38644 org.hibernate.mapping.RootClass: HHH000039: Composite-id class does not override hashCode(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 38644 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning  
+19-03-2024  WARN 17740 org.hibernate.mapping.RootClass: HHH000038: Composite-id class does not override equals(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 17740 org.hibernate.mapping.RootClass: HHH000039: Composite-id class does not override hashCode(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 17740 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning  
+19-03-2024  WARN 17740 o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'  
+19-03-2024 ERROR 17740 o.s.b.d.LoggingFailureAnalysisReporter: 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+  
+19-03-2024  WARN 37596 org.hibernate.mapping.RootClass: HHH000038: Composite-id class does not override equals(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 37596 org.hibernate.mapping.RootClass: HHH000039: Composite-id class does not override hashCode(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 37596 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning  
+19-03-2024  WARN 19980 org.hibernate.mapping.RootClass: HHH000038: Composite-id class does not override equals(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 19980 org.hibernate.mapping.RootClass: HHH000039: Composite-id class does not override hashCode(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 19980 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning  
+19-03-2024  WARN 21328 org.hibernate.mapping.RootClass: HHH000038: Composite-id class does not override equals(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 21328 org.hibernate.mapping.RootClass: HHH000039: Composite-id class does not override hashCode(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 21328 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning  
+19-03-2024  WARN 4184 org.hibernate.mapping.RootClass: HHH000038: Composite-id class does not override equals(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 4184 org.hibernate.mapping.RootClass: HHH000039: Composite-id class does not override hashCode(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 4184 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning  
+19-03-2024  WARN 5448 org.hibernate.mapping.RootClass: HHH000038: Composite-id class does not override equals(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 5448 org.hibernate.mapping.RootClass: HHH000039: Composite-id class does not override hashCode(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 5448 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning  
+19-03-2024  WARN 19668 org.hibernate.mapping.RootClass: HHH000038: Composite-id class does not override equals(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 19668 org.hibernate.mapping.RootClass: HHH000039: Composite-id class does not override hashCode(): com.ThankSens.Hentori.Entity.Keys.KPIId  
+19-03-2024  WARN 19668 o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration: spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning  
